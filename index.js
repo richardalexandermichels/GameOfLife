@@ -1,56 +1,45 @@
 //voxel-engine: base module
 var createGame = require('voxel-engine');
 
+var grass = ['grass', 'dirt', 'grass_dirt'];
+var dirt = ['dirt','dirt','dirt'];
 
-var perlin = require('voxel-perlin-terrain');
+var materials= [grass, dirt];
 
-var chunkSize = 32;
-var chunkDistance = 2;
-var texturePath ='./textures/';
+//Instanciate world Array 10X10 map
+var worldArray =[];
+for(var x= 0; x<=10; x++){
+  worldArray[x] = new Array(10);
+}
 
-var generate = perlin({
-  chunkDistance: chunkDistance,
-  chunkSize: chunkSize,
-  scaleFactor: chunkDistance * chunkSize / 4
-});
+//Instanciate all map to dirt;
+for(var x= 0; x<=10; x++){
+  for(var y=0 ; y<=10;y++){
+    worldArray[x][y] = new Cell("dirt");
+  }
+}
 
+//set 1X1 to be grass;
+worldArray[1][1].material="grass";
+
+function color(x,y,z){
+  return worldArray[x][z]["material"]==="dirt" ? 2 : 1;
+}
+
+
+
+function Cell(material) {
+  this.material = material;
+  // this.neighbor = [//cells];
+}
 
 var game = createGame({
-  // generate: function(x, y, z) {
-  //   return (y = 1) ? 1 : 0;
-  //  // flat World
-  // },
-  // generate: function(x,y,z) {
-  //   return x*x+y*y+z*z <= 15*15 ? 1 : 0; // sphere world
-  // },
-    // generate: generate, //perlin
-    generate: function(x, y, z) {
-  // if (y === 5 && x === 5 && z === 5) { return 2; }
-  // if (y === 4 && (x > 3 && x < 7) && (z > 3 && z < 7)) { return 2; }
-  // if (y === 3 && (x > 2 && x < 8) && (z > 2 && z < 8)) { return 2; }
-  // if (y === 2 && (x > 1 && x < 9) && (z > 1 && z < 9)) { return 2; }
-  // if (y === 1 && (x > 0 && x < 10) && (z > 0 && z < 10)) { return 2; }
-  return (y === 0 && Math.abs(x)<10 && Math.abs(z)<10) ? 1 : 0;
-  }, // pyramide
-    materials: [ 'grass', 'yellow' ],
+    generate: function(x,y,z){
+      return (y === 0 && x>=0 && x<=10 && z>=0 && z<=10) ? color(x,y,z) : 0;
+    },
+    materials: materials,
     texturePath: './textures/'
 });
-
-// var game = createGame({
-//   generateVoxelChunk: generate,
-//   cubeSize: 25,
-//   chunkSize: chunkSize,
-//   chunkDistance: chunkDistance,
-//   startingPosition: [185, 100, 0],
-//   texturePath: texturePath,
-//   worldOrigin: [0,0,0],
-//   controlOptions: {jump: 6}
-// })
-
-//set sky
-// var createSky = require('voxel-sky')(game);
-// var sky = createSky();
-// game.on('tick', sky);
 
 
 //voxel-player: add player that can move around. It needs a copy of the game
@@ -58,17 +47,9 @@ var createPlayer = require('voxel-player')(game);
 
 var player = createPlayer('textures/player.png'); //creates player and provide dummy texture
 
+// player.pov('third');
 player.possess(); //camera follow player
-player.yaw.position.set(0,100,0);
-
-
-
-//Create trees
-// var createTree = require('voxel-forest')
-// // Create some trees.
-// for (var i = 0; i < 25; i++) {
-// createTree(game, {bark: 2, leaves: 3});
-// }
+player.yaw.position.set(0,10,0);
 
 window.player=player;
 
