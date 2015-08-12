@@ -4,7 +4,7 @@
   "description": "Darwin Theory of Evolution Simulator",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "echo \"open localhost:8000/\" && ./node_modules/.bin/browservefy index.js 8000 -- -d"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/justYves/Game-of-Life-2.0/issues"
   },
-  "homepage": "https://github.com/justYves/Game-of-Life-2.0#readme"
+  "homepage": "https://github.com/justYves/Game-of-Life-2.0#readme",
+  "dependencies": {
+    "browservefy": "0.0.10",
+    "sky": "^0.5.0",
+    "voxel": "^0.5.0",
+    "voxel-engine": "^0.20.2",
+    "voxel-perlin-terrain": "^1.0.0",
+    "voxel-player": "^0.1.0",
+    "voxel-texture": "^0.5.8"
+  }
 }
