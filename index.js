@@ -31,16 +31,18 @@ var container = document.body;
 game.appendTo(container);
 
 // <------ CREATURE ------>
-var createCreature = require('./creature')(game);
-var basicCreature = createCreature("basic");
+var Basic = require('./creature/basicCreature.js');
+var basicCreature = new Basic(game);
 window.creature = basicCreature;
 basicCreature.setPosition(2, 10, 2);
-var cow = createCreature("cow");
+
+var Cow = require('./creature/cow.js');
+var cow = new Cow(game);
 window.cow = cow;
 cow.setPosition(3, 10, 2);
 
-
-var spider = createCreature("spider");
+var Spider = require('./creature/spider.js');
+var spider = new Spider(game);
 window.spider = spider;
 spider.setPosition(4, 10, 2);
 
@@ -78,5 +80,3 @@ setEvent();
 function moveRandomly(dir) {
     return Math.round(Math.random() * dir) || -Math.round(Math.random() * dir);
 }
-
-

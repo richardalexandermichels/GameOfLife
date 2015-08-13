@@ -1,13 +1,10 @@
-//require the node.js utils packet and add event emitter
-var util = require('util');
-var EventEmitter = require('events').EventEmitter;
+module.exports = Creature;
 
-module.exports = function(game) {
-    return function(type) {
-        return new Creature(game, type);
-        // return new Creature(game, type, opts); // If we wanted to include options later
-    };
-};
+// <---- deprecated ---->
+// return function(type) {
+//     return new Creature(game, type);
+//     // return new Creature(game, type, opts); // If we wanted to include options later
+
 
 //Where all shape are stored
 var shape = require('./shape.js');
@@ -36,7 +33,10 @@ function Creature(game, type, opts) {
     this.rotation = this.item.yaw.rotation;
 }
 
+//require the node.js utils packet and add event emitter
 //Adds event emitter functionality to Creature
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
 util.inherits(Creature, EventEmitter);
 
 //Loads basic behavior
