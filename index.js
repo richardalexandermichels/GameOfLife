@@ -36,7 +36,12 @@ var container = document.body;
 game.appendTo(container);
 
 //<----------Forest-------------------->
-var Forest = require('./forest')(game);
+var Forest = require('./forest')(game,{
+    bark: 3,
+    leaves: 4,
+    densityScale: 2,
+    treeType: 'random'
+});
 
 
 // <------ CREATURE ------>
