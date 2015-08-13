@@ -27,13 +27,15 @@ var game = createGame({
     texturePath: './textures/',
     controls: {
         discreteFire: true
-    }
+    },
+    // lightsDisabled: true
 });
 
 
 window.game = game; //for debugging
 var container = document.body;
 game.appendTo(container);
+
 
 //<----------Forest-------------------->
 var Forest = require('./forest')(game,{
@@ -44,20 +46,38 @@ var Forest = require('./forest')(game,{
 });
 
 
+
+//<------ SKY ------>
+var createSky = require('voxel-sky')({
+  game: game,
+
+  // starting time of the day
+  time: 2400,
+
+  // size of the sky
+  size: game.worldWidth() * 2,
+  // how fast the sky rotates
+});
+var sky = createSky(1200);
+game.on('tick', sky);
+
+
+
 // <------ CREATURE ------>
-var createCreature = require('./creature')(game);
-var basicCreature = createCreature("basic");
+var Basic = require('./creature/basicCreature.js');
+var basicCreature = new Basic(game);
 window.creature = basicCreature;
 basicCreature.setPosition(2, 10, 2);
-var cow = createCreature("cow");
+
+var Cow = require('./creature/cow.js');
+var cow = new Cow(game);
 window.cow = cow;
 cow.setPosition(3, 10, 2);
 
-
-var spider = createCreature("spider");
+var Spider = require('./creature/spider.js');
+var spider = new Spider(game);
 window.spider = spider;
 spider.setPosition(4, 10, 2);
-
 
 
 // <------ PLAYER ------>
@@ -85,32 +105,15 @@ window.addEventListener('keydown', function(){
     if (posZ >= map.size - 1 || posZ <= 1) player.position.set(posX, 1, map.size - 1);
 });
 
-var highlight = require('voxel-highlight')
-var highlighter = highlight(game)
+//<----- HIGHLIGHT HELPER ------>
+var highlight = require('voxel-highlight');
+var highlighter = highlight(game);
 var positionME;
 highlighter.on('highlight', function(voxelPosArray) {
-    positionME = voxelPosArray
+    positionME = voxelPosArray;
 });
 
-game.on('fire', function(pos) {
-    console.log(pos)
-});
 
-game.on('eat',function(x,z){
-    console.log(x,z);
-    map.empty(x,z);
-});
-
-function moveRandomly(dir) {
-    return Math.round(Math.random() * dir) || -Math.round(Math.random() * dir);
-}
-
-// <------ TICK ------>
-game.setInterval(function() {
-    cow.move(moveRandomly(1), 0, moveRandomly(1), map)
-    map.growGrass(game);
-}, 2000);
-
-game.setInterval(function() {
-    cow.move(moveRandomly(1), 0, moveRandomly(1), map)
-}, 500);
+//<----- GAME EVENT ------>
+var setEvent = require('./game-event')(game);
+setEvent();
