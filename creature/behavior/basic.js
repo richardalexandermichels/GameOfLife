@@ -7,7 +7,7 @@ Creature.prototype.jump = function(x) {
     if (x === undefined) x = 1;
     this.move(0, x, 0);
 };
-Creature.prototype.move = function(x, y, z, map) {
+Creature.prototype.move = function(x, y, z) {
     if (z < 0) {
         if (x === 0) this.rotation.y = Math.PI;
         else this.rotation.y = Math.PI * (3 / 4) * (x / Math.abs(x))
@@ -21,11 +21,11 @@ Creature.prototype.move = function(x, y, z, map) {
     }
 
     var xyz = parseXYZ(x, y, z);
-    if ((this.position.x + xyz.x <= map.size) && (this.position.x + xyz.x >= 0))
+    if ((this.position.x + xyz.x <= this.map.size) && (this.position.x + xyz.x >= 0))
         this.position.x += xyz.x;
-    if ((this.position.y + xyz.y <= map.size) && (this.position.y + xyz.y >= 0))
+    if ((this.position.y + xyz.y <= this.map.size) && (this.position.y + xyz.y >= 0))
         this.position.y += xyz.y;
-    if ((this.position.z + xyz.z <= map.size) && (this.position.z + xyz.z >= 0))
+    if ((this.position.z + xyz.z <= this.map.size) && (this.position.z + xyz.z >= 0))
         this.position.z += xyz.z;
 };
 

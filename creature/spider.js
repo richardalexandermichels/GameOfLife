@@ -1,7 +1,7 @@
 var Creature = require('./');
 
-function Spider(game) {
-    Creature.call(this, game, "spider");
+function Spider(game, map) {
+    Creature.call(this, game, "spider", map);
 }
 
 Spider.prototype = Object.create(Creature.prototype);
