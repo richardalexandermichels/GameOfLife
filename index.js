@@ -43,11 +43,7 @@ cow.setPosition(3, 10, 2);
 var spider = createCreature("spider");
 window.spider = spider;
 spider.setPosition(4, 10, 2);
-<<<<<<< HEAD
-=======
 
-
->>>>>>> master
 
 // <------ PLAYER ------>
 
@@ -75,22 +71,12 @@ highlighter.on('highlight', function(voxelPosArray) {
 });
 
 
-<<<<<<< HEAD
 //<----- GAME EVENT ------>
 var setEvent = require('./game-event')(game);
 setEvent();
-=======
+
 function moveRandomly(dir) {
     return Math.round(Math.random() * dir) || -Math.round(Math.random() * dir);
 }
 
-// <------ TICK ------>
-game.setInterval(function() {
-    cow.move(moveRandomly(1), 0, moveRandomly(1), map)
-    map.growGrass(game);
-}, 2000);
 
-game.setInterval(function() {
-    cow.move(moveRandomly(1), 0, moveRandomly(1), map)
-}, 500);
->>>>>>> master

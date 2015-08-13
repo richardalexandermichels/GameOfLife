@@ -65,17 +65,10 @@ Creature.prototype.notice = function(target, opts) {
 };
 
 Creature.prototype.setPosition = function(x, y, z) {
-<<<<<<< HEAD
   parseXYZ(x,y,z);
   this.position.y = y;
   this.position.x = x+0.5;
   this.position.z = z+0.5;
-=======
-    parseXYZ(x, y, z);
-    this.position.y = y;
-    this.position.x = x;
-    this.position.z = z;
->>>>>>> master
 };
 
 function parseXYZ(x, y, z) {
