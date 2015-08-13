@@ -4,7 +4,7 @@ var dirt = ['dirt', 'dirt', 'dirt'];
 var materials = [grass, dirt];
 
 // <------ MAP ------>
-var Map = require('./Map');
+var Map = require('./map');
 // Create Map
 var map = new Map(10);
 window.map = map;
@@ -29,44 +29,12 @@ window.game = game; //for debugging
 var container = document.body;
 game.appendTo(container);
 
+var createCreature = require('./creature')(game);
+var basicCreature = createCreature("spider");
+window.creature1 = basicCreature;
+basicCreature.setPosition(2, 10, 2);
 
-var createCreature = require('voxel-creature')(game);
-var creature = createCreature((function() {
-    var T = game.THREE;
-    var body = new T.Object3D();
 
-    var head = new T.Mesh(
-        new T.CubeGeometry(10, 10, 10),
-        new T.MeshLambertMaterial({
-            color: 0x800830,
-            ambient: 0x800830
-        })
-    );
-    head.position.set(0, 5, 0);
-    body.add(head);
-
-    var eyes = [0, 1].map(function() {
-        var eye = new T.Mesh(
-            new T.CubeGeometry(1, 1, 1),
-            new T.MeshLambertMaterial({
-                color: 0xffffff,
-                ambient: 0xffffff
-            })
-        );
-        body.add(eye);
-        return eye;
-    });
-    eyes[0].position.set(2, 8, 5);
-    eyes[1].position.set(-2, 8, 5);
-
-    return body;
-})());
-
-window.creature = creature;
-
-creature.position.y = 2;
-creature.position.x = 2;
-creature.position.z = 2;
 // <------ PLAYER ------>
 
 //voxel-player: add player that can move around. It needs a copy of the game
@@ -97,7 +65,6 @@ game.on('fire', function(pos) {
     // if (position) game.createBlock(positionYES, 1);
     // else game.setBlock(position, 0)
 })
-
 
 // <------ TICK ------>
 game.setInterval(function() {
