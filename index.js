@@ -33,6 +33,9 @@ var createCreature = require('./creature')(game);
 var basicCreature = createCreature("spider");
 window.creature1 = basicCreature;
 basicCreature.setPosition(2, 10, 2);
+var cow = createCreature("cow");
+window.creature2 = cow;
+cow.setPosition(3, 10, 2);
 
 
 // <------ PLAYER ------>
