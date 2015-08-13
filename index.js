@@ -1,8 +1,11 @@
+var _ = require("lodash");
 
 // <------ MATERIALS ------>
 var grass = ['grass', 'dirt', 'grass_dirt'];
 var dirt = ['dirt','dirt','dirt'];
-var materials= [grass, dirt];
+var bark = ['tree_side'];
+var leaves = ['leaves_opaque'];
+var materials = [grass, dirt, bark, leaves];
 
 
 // <------ MAP ------>
@@ -81,7 +84,17 @@ window.addEventListener('keydown', function (ev) {
     }
 });
 
+//<--------keep player from falling off!-------->
+window.addEventListener('keydown', function(){
+    var posX = player.position.x;
+    var posZ = player.position.z;
 
+    if (posX >= 9 || posX <= 1) player.position.set(9, 1, posZ);
+    if (posZ >= 9 || posZ <= 1) player.position.set(posX, 1, 9);
+})
+
+//<----------Forest-------------------->
+var Forest = require('./forest')(game);
 
 
 // <------ TICK ------>
