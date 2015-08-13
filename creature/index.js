@@ -9,10 +9,11 @@ module.exports = Creature;
 //Where all shape are stored
 var shape = require('./shape.js');
 
-function Creature(game, type, opts) {
+function Creature(game, type, map, opts) {
     var obj = shape[type]; // Get shape for creature
     var T = game.THREE;
     this.game = game;
+    this.map = map;
 
     //<--- Not currently Used --->
     // if (!opts) opts = {};

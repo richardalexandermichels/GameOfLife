@@ -32,17 +32,17 @@ game.appendTo(container);
 
 // <------ CREATURE ------>
 var Basic = require('./creature/basicCreature.js');
-var basicCreature = new Basic(game);
+var basicCreature = new Basic(game, map);
 window.creature = basicCreature;
 basicCreature.setPosition(2, 10, 2);
 
 var Cow = require('./creature/cow.js');
-var cow = new Cow(game);
+var cow = new Cow(game, map);
 window.cow = cow;
 cow.setPosition(3, 10, 2);
 
 var Spider = require('./creature/spider.js');
-var spider = new Spider(game);
+var spider = new Spider(game, map);
 window.spider = spider;
 spider.setPosition(4, 10, 2);
 
@@ -76,7 +76,3 @@ highlighter.on('highlight', function(voxelPosArray) {
 //<----- GAME EVENT ------>
 var setEvent = require('./game-event')(game);
 setEvent();
-
-function moveRandomly(dir) {
-    return Math.round(Math.random() * dir) || -Math.round(Math.random() * dir);
-}
