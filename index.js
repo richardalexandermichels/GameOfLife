@@ -45,7 +45,6 @@ window.spider = spider;
 spider.setPosition(4, 10, 2);
 
 
-
 // <------ PLAYER ------>
 
 //voxel-player: add player that can move around. It needs a copy of the game
@@ -63,32 +62,21 @@ window.addEventListener('keydown', function(ev) {
 });
 
 
-var highlight = require('voxel-highlight')
-var highlighter = highlight(game)
+//<----- HIGHLIGHT HELPER ------>
+var highlight = require('voxel-highlight');
+var highlighter = highlight(game);
 var positionME;
 highlighter.on('highlight', function(voxelPosArray) {
-    positionME = voxelPosArray
+    positionME = voxelPosArray;
 });
 
-game.on('fire', function(pos) {
-    console.log(pos)
-});
 
-game.on('eat',function(x,z){
-    console.log(x,z);
-    map.empty(x,z);
-});
+//<----- GAME EVENT ------>
+var setEvent = require('./game-event')(game);
+setEvent();
 
 function moveRandomly(dir) {
     return Math.round(Math.random() * dir) || -Math.round(Math.random() * dir);
 }
 
-// <------ TICK ------>
-game.setInterval(function() {
-    cow.move(moveRandomly(1), 0, moveRandomly(1), map)
-    map.growGrass(game);
-}, 2000);
 
-game.setInterval(function() {
-    cow.move(moveRandomly(1), 0, moveRandomly(1), map)
-}, 500);

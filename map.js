@@ -85,9 +85,14 @@ Map.prototype.growGrass = function(game) {
 
 Map.prototype.empty = function(x,z) {
     var currentCell = this.getCell(x,z);
+    if(currentCell.getMaterial ==="dirt") return; //if animal eat empty patch
     currentCell.setMaterial("dirt");
     game.setBlock(currentCell.coordinate,2);// 2 = Dirt
-    this.nextRound.push(currentCell);
+
+    //Check if neighbors is alive to regrow
+    currentCell.neighbors.forEach(function(neighbor){
+        if(neighbor.getMaterial === "grass") this.nextRound.push(currentCell);
+    });
 };
 
 
