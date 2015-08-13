@@ -31,16 +31,18 @@ var container = document.body;
 game.appendTo(container);
 
 // <------ CREATURE ------>
-var createCreature = require('./creature')(game);
-var basicCreature = createCreature("basic");
+var Basic = require('./creature/basicCreature.js');
+var basicCreature = new Basic(game);
 window.creature = basicCreature;
 basicCreature.setPosition(2, 10, 2);
-var cow = createCreature("cow");
+
+var Cow = require('./creature/cow.js');
+var cow = new Cow(game);
 window.cow = cow;
 cow.setPosition(3, 10, 2);
 
-
-var spider = createCreature("spider");
+var Spider = require('./creature/spider.js');
+var spider = new Spider(game);
 window.spider = spider;
 spider.setPosition(4, 10, 2);
 
@@ -74,9 +76,9 @@ game.on('fire', function(pos) {
     console.log(pos)
 });
 
-game.on('eat',function(x,z){
-    console.log(x,z);
-    map.empty(x,z);
+game.on('eat', function(x, z) {
+    console.log(x, z);
+    map.empty(x, z);
 });
 
 function moveRandomly(dir) {
@@ -87,8 +89,8 @@ function moveRandomly(dir) {
 game.setInterval(function() {
     cow.move(moveRandomly(1), 0, moveRandomly(1), map)
     map.growGrass(game);
-}, 2000);
+}, 10000);
 
 game.setInterval(function() {
     cow.move(moveRandomly(1), 0, moveRandomly(1), map)
-}, 500);
+}, 1000);
