@@ -5,7 +5,13 @@ module.exports = function(game) {
   };
 };
 
-var shape = require('./shape.js'); //Where all shape are stored
+//require the node.js utils packet and add event emitter
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
+util.inherits(Creature,EventEmitter);
+
+//Where all shape are stored
+var shape = require('./shape.js');
 
 function Creature(game, type, opts) {
   console.log(shape);
@@ -35,32 +41,11 @@ Creature.prototype.jump = function(x) {
   if (x === undefined) x = 1;
   this.move(0, x, 0);
 };
-
 Creature.prototype.move = function(x, y, z) {
-  var game = this.game;
-  var T = game.THREE;
-
-  if (typeof x === 'object' && Array.isArray(x)) {
-    y = x[1];
-    z = x[2];
-    x = x[0];
-  }
-  if (typeof x === 'object') {
-    y = x.y;
-    z = x.z;
-    x = x.x;
-  }
-  this.item.velocity.x += x;
-  this.item.velocity.y += y;
-  this.item.velocity.z += z;
-
-  if (this.item.velocity.y === 0) {
-    var angle = this.rotation.y;
-    var pt = this.position.clone();
-    pt.x += game.cubeSize / 2 * Math.sin(angle);
-    pt.z += game.cubeSize / 2 * Math.cos(angle);
-    if (game.getBlock(pt)) this.emit('block');
-  }
+    var xyz = parseXYZ(x, y, z);
+    this.position.x += xyz.x;
+    this.position.y += xyz.y;
+    this.position.z += xyz.z;
 };
 
 Creature.prototype.lookAt = function(obj) {
@@ -99,3 +84,24 @@ Creature.prototype.setPosition = function(x, y, z) {
   this.position.x = x;
   this.position.z = z;
 };
+
+function parseXYZ(x, y, z) {
+    if (typeof x === 'object' && Array.isArray(x)) {
+        return {
+            x: x[0],
+            y: x[1],
+            z: x[2]
+        };
+    } else if (typeof x === 'object') {
+        return {
+            x: x.x || 0,
+            y: x.y || 0,
+            z: x.z || 0
+        };
+    }
+    return {
+        x: Number(x),
+        y: Number(y),
+        z: Number(z)
+    };
+}

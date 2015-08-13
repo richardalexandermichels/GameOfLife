@@ -27,11 +27,17 @@ window.game = game; //for debugging
 var container = document.body;
 game.appendTo(container);
 
-
+// <------ CREATURE ------>
 var createCreature = require('./creature')(game);
-var basicCreature = createCreature("spider");
+var basicCreature = createCreature("basic");
 window.creature1 = basicCreature;
 basicCreature.setPosition(2,10,2);
+
+
+var spider = createCreature("spider");
+window.spider = spider;
+spider.setPosition(4,10,2);
+
 
 
 // <------ PLAYER ------>
