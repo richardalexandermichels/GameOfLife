@@ -76,7 +76,3 @@ highlighter.on('highlight', function(voxelPosArray) {
 //<----- GAME EVENT ------>
 var setEvent = require('./game-event')(game);
 setEvent();
-
-function moveRandomly(dir) {
-    return Math.round(Math.random() * dir) || -Math.round(Math.random() * dir);
-}
