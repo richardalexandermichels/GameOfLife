@@ -15,7 +15,7 @@ Creature.prototype.move = function(x, y, z) {
 };
 
 Creature.prototype.eat  = function(){
-  this.game.emit('eat',this.position.x,this.position.z);
+  this.game.emit('eat',this.position.x-0.5,this.position.z-0.5);
 };
 
 Creature.prototype.lookAt = function(obj) {
@@ -52,8 +52,8 @@ Creature.prototype.notice = function(target, opts) {
 Creature.prototype.setPosition = function(x, y, z) {
   parseXYZ(x,y,z);
   this.position.y = y;
-  this.position.x = x;
-  this.position.z = z;
+  this.position.x = x+0.5;
+  this.position.z = z+0.5;
 };
 
 function parseXYZ(x, y, z) {

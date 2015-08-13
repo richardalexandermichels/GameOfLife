@@ -39,9 +39,7 @@ basicCreature.setPosition(2, 10, 2);
 
 var spider = createCreature("spider");
 window.spider = spider;
-spider.setPosition(4,10,2);
-
-
+spider.setPosition(4, 10, 2);
 
 // <------ PLAYER ------>
 
@@ -60,23 +58,15 @@ window.addEventListener('keydown', function(ev) {
 });
 
 
-var highlight = require('voxel-highlight')
-var highlighter = highlight(game)
+//<----- HIGHLIGHT HELPER ------>
+var highlight = require('voxel-highlight');
+var highlighter = highlight(game);
 var positionME;
 highlighter.on('highlight', function(voxelPosArray) {
-    positionME = voxelPosArray
+    positionME = voxelPosArray;
 });
 
-game.on('fire', function(pos) {
-    console.log(pos)
-});
 
-game.on('eat',function(x,z){
-    console.log(x,z);
-    map.empty(x,z);
-});
-
-// <------ TICK ------>
-game.setInterval(function() {
-    map.growGrass(game);
-}, 2000);
+//<----- GAME EVENT ------>
+var setEvent = require('./game-event')(game);
+setEvent();
