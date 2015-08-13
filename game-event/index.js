@@ -7,10 +7,15 @@ module.exports = function(game) {
 
 function setEvent(game) {
 
-    //Notified that an animal is eating grass at position x,z
+    //Notified that an Creature is eating grass at position x,z
     game.on('eat', function(x, z) {
         console.log(x, z);
         map.empty(x, z);
+    });
+
+    //Creature is procreating
+    game.on('procreate',function(x,z,type){
+        console.log(type);
     });
 
     // <------ TICK ------>

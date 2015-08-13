@@ -23,7 +23,7 @@ var game = createGame({
     controls: {
         discreteFire: true
     },
-    // lightsDisabled: true
+    lightsDisabled: true
 });
 
 
@@ -43,6 +43,7 @@ var createSky = require('voxel-sky')({
   // size of the sky
   size: game.worldWidth() * 2,
   // how fast the sky rotates
+  speed: 1
 });
 var sky = createSky(1200);
 game.on('tick', sky);
