@@ -1,6 +1,8 @@
 function Map(n) {
+    this.game;
     this.size = n;
     this.data = [];
+    this.nextRound = [];
     this.fertilized = [];
     this.createMap(n);
     this.setNeighbors();
@@ -47,8 +49,8 @@ Map.prototype.getMaterial = function(x, z) {
 
 
 Map.prototype.fertilize = function(x, z) {
-    // z is optional, if want to pass in multiple cells, 
-    // pass in 2d array as x, otherwise pass in coordinates 
+    // z is optional, if want to pass in multiple cells,
+    // pass in 2d array as x, otherwise pass in coordinates
     // individually
     // check if fertilizing a whole patch or just one cell
     if (Array.isArray(x)) {
@@ -63,22 +65,33 @@ Map.prototype.fertilize = function(x, z) {
 };
 
 Map.prototype.growGrass = function(game) {
-    var nextRound = [];
+    this.game = game;
+    var self = this;
     this.fertilized.forEach(function(cell) {
         cell.setMaterial("grass");
         game.setBlock(cell.coordinate, 1); // 1 = grass
         cell.neighbors.forEach(function(neighbor) {
             if (neighbor.material !== "grass") {
                 if (Math.random() > 0.9)
-                    nextRound.push(neighbor);
-                else nextRound.push(cell);
+                    self.nextRound.push(neighbor);
+                else self.nextRound.push(cell);
             }
         });
     });
 
     //replace fertilized with the next round
-    this.fertilized = nextRound;
+    this.fertilized = this.nextRound;
 };
+
+Map.prototype.empty = function(x,z) {
+    var currentCell = this.getCell(x,z);
+    currentCell.setMaterial("dirt");
+    game.setBlock(currentCell.coordinate,2);// 2 = Dirt
+    this.nextRound.push(currentCell);
+};
+
+
+
 
 function Cell(x, z, material) {
     this.material = material || "dirt";
