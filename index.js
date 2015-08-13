@@ -22,13 +22,31 @@ var game = createGame({
     texturePath: './textures/',
     controls: {
         discreteFire: true
-    }
+    },
+    // lightsDisabled: true
 });
 
 
 window.game = game; //for debugging
 var container = document.body;
 game.appendTo(container);
+
+
+
+//<------ SKY ------>
+var createSky = require('voxel-sky')({
+  game: game,
+
+  // starting time of the day
+  time: 2400,
+
+  // size of the sky
+  size: game.worldWidth() * 2,
+  // how fast the sky rotates
+});
+var sky = createSky(1200);
+game.on('tick', sky);
+
 
 // <------ CREATURE ------>
 var Basic = require('./creature/basicCreature.js');
