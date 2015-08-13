@@ -33,13 +33,16 @@ game.appendTo(container);
 // <------ CREATURE ------>
 var createCreature = require('./creature')(game);
 var basicCreature = createCreature("basic");
-window.creature1 = basicCreature;
+window.creature = basicCreature;
 basicCreature.setPosition(2, 10, 2);
+var cow = createCreature("cow");
+window.cow = cow;
+cow.setPosition(3, 10, 2);
 
 
 var spider = createCreature("spider");
 window.spider = spider;
-spider.setPosition(4,10,2);
+spider.setPosition(4, 10, 2);
 
 
 
@@ -76,7 +79,16 @@ game.on('eat',function(x,z){
     map.empty(x,z);
 });
 
+function moveRandomly(dir) {
+    return Math.round(Math.random() * dir) || -Math.round(Math.random() * dir);
+}
+
 // <------ TICK ------>
 game.setInterval(function() {
+    cow.move(moveRandomly(1), 0, moveRandomly(1), map)
     map.growGrass(game);
 }, 2000);
+
+game.setInterval(function() {
+    cow.move(moveRandomly(1), 0, moveRandomly(1), map)
+}, 500);
