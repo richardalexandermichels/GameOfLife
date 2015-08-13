@@ -2,11 +2,12 @@
 var grass = ['grass', 'dirt', 'grass_dirt'];
 var dirt = ['dirt', 'dirt', 'dirt'];
 var materials = [grass, dirt];
+var size = 20; // <---- Set the Size HERE
 
 // <------ MAP ------>
 var Map = require('./map');
 // Create Map
-var map = new Map(10);
+var map = new Map(size);
 window.map = map;
 map.fertilize(5, 5);
 
@@ -15,7 +16,7 @@ map.fertilize(5, 5);
 var createGame = require('voxel-engine');
 var game = createGame({
     generate: function(x, y, z) {
-        return (y === 0 && x >= 0 && x <= 10 && z >= 0 && z <= 10) ? map.getMaterial(x, z) : 0;
+        return (y === 0 && x >= 0 && x <= size && z >= 0 && z <= size) ? map.getMaterial(x, z) : 0;
     },
     materials: materials,
     texturePath: './textures/',
@@ -67,11 +68,16 @@ var highlighter = highlight(game)
 var positionME;
 highlighter.on('highlight', function(voxelPosArray) {
     positionME = voxelPosArray
-})
+});
 
 game.on('fire', function(pos) {
     console.log(pos)
-})
+});
+
+game.on('eat',function(x,z){
+    console.log(x,z);
+    map.empty(x,z);
+});
 
 function moveRandomly(dir) {
     return Math.round(Math.random() * dir) || -Math.round(Math.random() * dir);

@@ -1,52 +1,43 @@
-var inherits = require('inherits');
+var util = require('util');
 var EventEmitter = require('events').EventEmitter;
+util.inherits(Creature, EventEmitter);
 
-module.exports = function(game) {
-    return function(obj, opts) {
-        return new Creature(game, obj, opts);
-    };
-};
-
-inherits(Creature, EventEmitter);
-
-function Creature(game, obj, opts) {
-    var T = game.THREE;
-    this.game = game;
-
-    if (!opts) opts = {};
-    var force = opts.force || [0, -0.00009, 0];
-    if (Array.isArray(force)) {
-        force = new T.Vector3(force[0], force[1], force[2]);
-    } else force = new T.Vector3(force.x, force.y, force.z);
-
-    obj.scale = new T.Vector3(0.04, 0.04, 0.04);
-
-    this.item = game.makePhysical(obj, obj.scale);
-    this.item.subjectTo(game.gravity);
-    game.scene.add(obj);
-    game.addItem(this.item); //this line breaks
-    game.control(this.item);
-    this.position = this.item.yaw.position;
-    this.rotation = this.item.yaw.rotation;
-}
-
+function Creature() {}
 Creature.prototype.jump = function(x) {
     if (x === undefined) x = 1;
     this.move(0, x, 0);
 };
+Creature.prototype.move = function(x, y, z, map) {
+    if (z < 0) {
+        if (x === 0) this.rotation.y = Math.PI;
+        else this.rotation.y = Math.PI * (3 / 4) * (x / Math.abs(x))
+    }
+    if (z > 0) {
+        if (x === 0) this.rotation.y = 0;
+        else this.rotation.y = Math.PI * (1 / 4) * (x / Math.abs(x))
+    }
+    if (z === 0 && x !== 0) {
+        this.rotation.y = Math.PI * (1 / 2) * (x / Math.abs(x));
+    }
 
-Creature.prototype.move = function(x, y, z) {
     var xyz = parseXYZ(x, y, z);
-    this.position.x += xyz.x;
-    this.position.y += xyz.y;
-    this.position.z += xyz.z;
+    if ((this.position.x + xyz.x <= map.size) && (this.position.x + xyz.x >= 0))
+        this.position.x += xyz.x;
+    if ((this.position.y + xyz.y <= map.size) && (this.position.y + xyz.y >= 0))
+        this.position.y += xyz.y;
+    if ((this.position.z + xyz.z <= map.size) && (this.position.z + xyz.z >= 0))
+        this.position.z += xyz.z;
+};
+
+Creature.prototype.eat = function() {
+    this.game.emit('eat', this.position.x, this.position.z);
 };
 
 Creature.prototype.lookAt = function(obj) {
     var a = obj.position || obj;
     var b = this.position;
 
-    this.item.yaw.rotation.y = Math.atan2(a.x - b.x, a.z - b.z) + Math.random() * 1 / 4 - 1 / 8;
+    this.rotation.y = Math.atan2(a.x - b.x, a.z - b.z) + Math.random() * 1 / 4 - 1 / 8;
 };
 
 Creature.prototype.notice = function(target, opts) {
@@ -73,6 +64,13 @@ Creature.prototype.notice = function(target, opts) {
     }, opts.interval);
 };
 
+Creature.prototype.setPosition = function(x, y, z) {
+    parseXYZ(x, y, z);
+    this.position.y = y;
+    this.position.x = x;
+    this.position.z = z;
+};
+
 function parseXYZ(x, y, z) {
     if (typeof x === 'object' && Array.isArray(x)) {
         return {
@@ -93,3 +91,5 @@ function parseXYZ(x, y, z) {
         z: Number(z)
     };
 }
+
+module.exports = Creature;

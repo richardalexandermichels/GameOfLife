@@ -1,3 +1,7 @@
+//require the node.js utils packet and add event emitter
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
+
 module.exports = function(game) {
     return function(type) {
         return new Creature(game, type);
@@ -5,27 +9,22 @@ module.exports = function(game) {
     };
 };
 
-//require the node.js utils packet and add event emitter
-var util = require('util');
-var EventEmitter = require('events').EventEmitter;
-util.inherits(Creature, EventEmitter);
-
 //Where all shape are stored
 var shape = require('./shape.js');
 
 function Creature(game, type, opts) {
-    console.log(shape);
     var obj = shape[type]; // Get shape for creature
     var T = game.THREE;
     this.game = game;
 
-    if (!opts) opts = {};
-    var force = opts.force || [0, -0.00009, 0];
-    if (Array.isArray(force)) {
-        force = new T.Vector3(force[0], force[1], force[2]);
-    } else force = new T.Vector3(force.x, force.y, force.z);
+    //<--- Not currently Used --->
+    // if (!opts) opts = {};
+    // var force = opts.force || [0, -0.00009, 0];
+    // if (Array.isArray(force)) {
+    //   force = new T.Vector3(force[0], force[1], force[2]);
+    // } else force = new T.Vector3(force.x, force.y, force.z);
+    // var dims = opts.dims || new T.Vector3(0.04, 0.04, 0.04); //missing a skin option ?
 
-    var dims = opts.dims || new T.Vector3(0.04, 0.04, 0.04); //missing a skin option ?
     obj.scale = new T.Vector3(0.04, 0.04, 0.04);
 
     this.item = game.makePhysical(obj);
@@ -37,86 +36,8 @@ function Creature(game, type, opts) {
     this.rotation = this.item.yaw.rotation;
 }
 
-Creature.prototype.jump = function(x) {
-    if (x === undefined) x = 1;
-    this.move(0, x, 0);
-};
-Creature.prototype.move = function(x, y, z, map) {
-    if (z < 0) {
-        if (x === 0) this.item.yaw.rotation.y = Math.PI;
-        else this.item.yaw.rotation.y = Math.PI * (3 / 4) * (x / Math.abs(x))
-    }
-    if (z > 0) {
-        if (x === 0) this.item.yaw.rotation.y = 0;
-        else this.item.yaw.rotation.y = Math.PI * (1 / 4) * (x / Math.abs(x))
-    }
-    if (z === 0 && x !== 0) {
-        this.item.yaw.rotation.y = Math.PI * (1 / 2) * (x / Math.abs(x));
-    }
+//Adds event emitter functionality to Creature
+util.inherits(Creature, EventEmitter);
 
-    var xyz = parseXYZ(x, y, z);
-    if ((this.position.x + xyz.x <= map.size) && (this.position.x + xyz.x >= 0))
-        this.position.x += xyz.x;
-    if ((this.position.y + xyz.y <= map.size) && (this.position.y + xyz.y >= 0))
-        this.position.y += xyz.y;
-    if ((this.position.z + xyz.z <= map.size) && (this.position.z + xyz.z >= 0))
-        this.position.z += xyz.z;
-};
-
-Creature.prototype.lookAt = function(obj) {
-    var a = obj.position || obj;
-    var b = this.position;
-
-    this.item.yaw.rotation.y = Math.atan2(a.x - b.x, a.z - b.z) + Math.random() * 1 / 4 - 1 / 8;
-};
-
-Creature.prototype.notice = function(target, opts) {
-    var self = this;
-    if (!opts) opts = {};
-    if (opts.radius === undefined) opts.radius = 500;
-    if (opts.collisionRadius === undefined) opts.collisionRadius = 25;
-    if (opts.interval === undefined) opts.interval = 1000;
-    var pos = target.position || target;
-
-    return setInterval(function() {
-        var dist = self.position.distanceTo(pos);
-        if (dist < opts.collisionRadius) {
-            self.emit('collide', target);
-        }
-
-        if (dist < opts.radius) {
-            self.noticed = true;
-            self.emit('notice', target);
-        } else {
-            self.noticed = false;
-            self.emit('frolic', target);
-        }
-    }, opts.interval);
-};
-
-Creature.prototype.setPosition = function(x, y, z) {
-    this.position.y = y;
-    this.position.x = x;
-    this.position.z = z;
-};
-
-function parseXYZ(x, y, z) {
-    if (typeof x === 'object' && Array.isArray(x)) {
-        return {
-            x: x[0],
-            y: x[1],
-            z: x[2]
-        };
-    } else if (typeof x === 'object') {
-        return {
-            x: x.x || 0,
-            y: x.y || 0,
-            z: x.z || 0
-        };
-    }
-    return {
-        x: Number(x),
-        y: Number(y),
-        z: Number(z)
-    };
-}
+//Loads basic behavior
+util.inherits(Creature, require('./behavior/basic.js'));
