@@ -73,8 +73,3 @@ function setEvent(game) {
         creature.move(moveRandomly(1), 0, moveRandomly(1), map)
     }, 1000);
 }
-
-
-function moveRandomly(dir) {
-    return Math.round(Math.random() * dir) || -Math.round(Math.random() * dir);
-}
