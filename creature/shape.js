@@ -110,6 +110,142 @@ var shape = {
         }, 250);
 
         return body;
+    })(),
+    cow: (function() {
+        var T = game.THREE;
+        var body = new T.Object3D();
+
+        var abdomen = new T.Mesh(
+            new T.CubeGeometry(10, 10, 15),
+            new T.MeshLambertMaterial({
+                color: 0xffffff,
+                ambient: 0xffffff
+            })
+        );
+        abdomen.position.set(0, 15, 0);
+        body.add(abdomen);
+
+        var head = new T.Mesh(
+            new T.CubeGeometry(8, 8, 5),
+            new T.MeshLambertMaterial({
+                color: 0xffffff,
+                ambient: 0xffffff
+            })
+        );
+        head.position.set(0, 17, 10);
+        body.add(head);
+
+        var eyes = [0, 1].map(function() {
+            var eye = new T.Mesh(
+                new T.CubeGeometry(1, 1, 1),
+                new T.MeshLambertMaterial({
+                    color: 0x000000,
+                    ambient: 0x000000
+                })
+            );
+            body.add(eye);
+            return eye;
+        });
+        eyes[0].position.set(1.5, 18, 12.5);
+        eyes[1].position.set(-1.5, 18, 12.5);
+
+        var legs = [0, 1, 2, 3].map(function() {
+            var leg = new T.Mesh(
+                new T.CubeGeometry(3, 8, 3),
+                new T.MeshLambertMaterial({
+                    color: 0xffffff,
+                    ambient: 0xffffff
+                })
+            );
+            body.add(leg);
+            return leg;
+        })
+
+        legs[0].position.set(3.5, 9, 6);
+        legs[1].position.set(-3.5, 6, 6);
+        legs[2].position.set(-3.5, 9, -6);
+        legs[3].position.set(3.5, 6, -6);
+
+        var check = true;
+        setInterval(function() {
+            if (check) {
+                check = false;
+                legs.forEach(function(leg, index) {
+                    if (index % 2) leg.position.y += 3;
+                    else leg.position.y -= 3;
+                });
+            } else {
+                check = true;
+                legs.forEach(function(leg, index) {
+                    if (index % 2) leg.position.y -= 3;
+                    else leg.position.y += 3;
+                });
+            }
+        }, 250);
+
+        var snout = new T.Mesh(
+            new T.CubeGeometry(9, 5, 6),
+            new T.MeshLambertMaterial({
+                color: 0xff99ff,
+                ambient: 0xff99ff
+            })
+        );
+        snout.position.set(0, 14.5, 10.5);
+        body.add(snout);
+
+        var nostrils = [0, 1].map(function() {
+            var nostril = new T.Mesh(
+                new T.CubeGeometry(2, 2, 1),
+                new T.MeshLambertMaterial({
+                    color: 0x000000,
+                    ambient: 0x000000
+                })
+            );
+            body.add(nostril);
+            return nostril;
+        });
+        nostrils[0].position.set(2.5, 14.5, 13.5);
+        nostrils[1].position.set(-2.5, 14.5, 13.5);
+
+        var antennae = [0, 1].map(function() {
+            var antenna = new T.Mesh(
+                new T.CubeGeometry(1.5, 4, 1.5),
+                new T.MeshLambertMaterial({
+                    color: 0x999999,
+                    ambient: 0x999999
+                })
+            );
+            body.add(antenna);
+            return antenna;
+        });
+        antennae[0].position.set(2.5, 23, 11);
+        antennae[1].position.set(-2.5, 23, 11);
+
+        var ears = [0, 1].map(function() {
+            var ear = new T.Mesh(
+                new T.CubeGeometry(3, 3, 1.5),
+                new T.MeshLambertMaterial({
+                    color: 0x000000,
+                    ambient: 0x000000
+                })
+            );
+            body.add(ear);
+            return ear;
+        });
+        ears[0].position.set(5.5, 18.5, 10);
+        ears[1].position.set(-5.5, 18.5, 10);
+
+        var tail = new T.Mesh(
+            new T.CubeGeometry(2, 5, 1.5),
+            new T.MeshLambertMaterial({
+                color: 0x999999,
+                ambient: 0x999999
+            })
+        );
+        tail.position.set(0, 16, -8.25);
+        body.add(tail);
+
+        return body;
     })()
 };
 
