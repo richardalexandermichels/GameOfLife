@@ -1,8 +1,12 @@
+var _ = require("lodash");
+
 // <------ MATERIALS ------>
 var grass = ['grass', 'dirt', 'grass_dirt'];
 var dirt = ['dirt', 'dirt', 'dirt'];
-var materials = [grass, dirt];
-var size = 20; // <---- Set the Size HERE
+var bark = ['tree_side'];
+var leaves = ['leaves_opaque'];
+var materials = [grass, dirt, bark, leaves];
+var size = 20;
 
 // <------ MAP ------>
 var Map = require('./map');
@@ -22,13 +26,41 @@ var game = createGame({
     texturePath: './textures/',
     controls: {
         discreteFire: true
-    }
+    },
+    // lightsDisabled: true
 });
 
 
 window.game = game; //for debugging
 var container = document.body;
 game.appendTo(container);
+
+
+//<----------Forest-------------------->
+var Forest = require('./forest')(game, {
+    bark: 3,
+    leaves: 4,
+    densityScale: 2,
+    treeType: 'random'
+});
+
+
+
+//<------ SKY ------>
+var createSky = require('voxel-sky')({
+    game: game,
+
+    // starting time of the day
+    time: 2400,
+
+    // size of the sky
+    size: game.worldWidth() * 2,
+    // how fast the sky rotates
+});
+var sky = createSky(1200);
+game.on('tick', sky);
+
+
 
 // <------ CREATURE ------>
 var Basic = require('./creature/basicCreature.js');
@@ -63,6 +95,14 @@ window.addEventListener('keydown', function(ev) {
     }
 });
 
+//<--------keep player from falling off!-------->
+window.addEventListener('keydown', function() {
+    var posX = player.position.x;
+    var posZ = player.position.z;
+
+    if (posX >= map.size - 1 || posX <= 1) player.position.set(map.size - 1, 1, posZ);
+    if (posZ >= map.size - 1 || posZ <= 1) player.position.set(posX, 1, map.size - 1);
+});
 
 //<----- HIGHLIGHT HELPER ------>
 var highlight = require('voxel-highlight');

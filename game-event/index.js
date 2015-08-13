@@ -63,5 +63,13 @@ function setEvent(game) {
                 cow.moving = true;
             }
         }
+
+        spider.move(moveRandomly(1), 0, moveRandomly(1), map)
+        creature.move(moveRandomly(1), 0, moveRandomly(1), map)
     }, 1000);
+}
+
+
+function moveRandomly(dir) {
+    return Math.round(Math.random() * dir) || -Math.round(Math.random() * dir);
 }
