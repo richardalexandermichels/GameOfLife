@@ -61,9 +61,6 @@ highlighter.on('highlight', function(voxelPosArray) {
 
 game.on('fire', function(pos) {
     console.log(pos)
-    // var position = positionME;
-    // if (position) game.createBlock(positionYES, 1);
-    // else game.setBlock(position, 0)
 })
 
 // <------ TICK ------>
