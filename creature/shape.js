@@ -1,5 +1,5 @@
 var shape = {
-    basic: (function() {
+    basic: function() {
         var T = game.THREE;
         var body = new T.Object3D();
 
@@ -28,8 +28,8 @@ var shape = {
         eyes[1].position.set(-2, 8, 5);
 
         return body;
-    })(),
-    spider: (function() {
+    },
+    spider: function() {
         var T = game.THREE;
 
         var body = new T.Object3D;
@@ -110,8 +110,8 @@ var shape = {
         }, 250);
 
         return body;
-    })(),
-    cow: (function() {
+    },
+    cow: function() {
         var T = game.THREE;
         var body = new T.Object3D();
 
@@ -159,7 +159,7 @@ var shape = {
             );
             body.add(leg);
             return leg;
-        })
+        });
 
         legs[0].position.set(3.5, 9, 6);
         legs[1].position.set(-3.5, 6, 6);
@@ -246,7 +246,7 @@ var shape = {
         body.add(tail);
 
         return body;
-    })()
+    }
 };
 
 module.exports = shape;

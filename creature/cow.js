@@ -1,7 +1,7 @@
 var Creature = require('./');
 
 function Cow(game, map) {
-    Creature.call(this, game, "cow", map);
+    Creature.call(this, game, 'cow', map);
     this.eating = false;
     this.moving = false;
     this.food;
