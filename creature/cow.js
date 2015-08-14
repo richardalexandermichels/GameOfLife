@@ -8,7 +8,7 @@ function Cow(game, map) {
     this.eatingCount = 0;
     this.hp = 10;
     this.hpCount = 0;
-    this.hungry = false;
+    this.hungry;
     this.alive = true;
 }
 

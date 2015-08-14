@@ -7,11 +7,27 @@ function moveRandomly(dir) {
 function setEvent(game, creatures) {
     var cow = creatures.cow[0];
 
-    //Notified that an animal is eating grass at position x,z
+    //Notified that an Creature is eating grass at position x,z
     game.on('eat', function(x, z) {
         console.log(x, z);
         map.empty(x, z);
     });
+
+    //Creature is procreating
+    game.on('procreate',function(x,z,type){
+        console.log(type);
+    });
+
+
+    // //<--------keep player from falling off!-------->
+    // window.addEventListener('keydown', function check() {
+    //     var posX = player.position.x;
+    //     var posZ = player.position.z;
+
+    //     if (posX >= map.size - 1 || posX <= 1) player.position.set(map.size - 1, 1, posZ);
+    //     if (posZ >= map.size - 1 || posZ <= 1) player.position.set(posX, 1, map.size - 1);
+    //     setTimeout(check,1000);
+    // });
 
     // <------ TICK ------>
     game.setInterval(function() {
