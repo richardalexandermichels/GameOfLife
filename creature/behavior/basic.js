@@ -93,10 +93,12 @@ function parseXYZ(x, y, z) {
 }
 
 Creature.prototype.procreate = function() {
-    this.game.emit("procreate", 5.5, this.position.z - 0.5, this.constructor.name);
+    this.game.emit("procreate", 5.5, this.position.z - 0.5, this.prototype.constructor.name);
     var creature = require('../cow.js');
-    var newCreature = new creature(this.game);
-    newCreature.setPosition(this.position.x - 0.5, 10, this.position.z - 0.5);
+    var newCreature = new creature(this.game,this.map);
+    console.log(newCreature);
+    console.log(this);
+    // newCreature.setPosition(this.position.x - 0.5, 10, this.position.z - 0.5);
 };
 
 module.exports = Creature;
