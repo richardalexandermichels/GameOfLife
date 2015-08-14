@@ -53,9 +53,13 @@ var createSky = require('voxel-sky')({
     // starting time of the day
     time: 2400,
 
-    // size of the sky
-    size: game.worldWidth() * 2,
-    // how fast the sky rotates
+
+  // size of the sky
+  size: game.worldWidth() * 2,
+  // how fast the sky rotates
+  // speed: 1
+
+
 });
 var sky = createSky(1200);
 game.on('tick', sky);
@@ -98,15 +102,6 @@ window.addEventListener('keydown', function(ev) {
         player.toggle();
     }
 });
-
-//<--------keep player from falling off!-------->
-
-// window.addEventListener('keydown', function(){
-//     var posX = player.position.x;
-//     var posZ = player.position.z;
-//     if (posX >= map.size - 1 || posX <= 1) player.position.set(map.size - 1, 1, posZ);
-//     if (posZ >= map.size - 1 || posZ <= 1) player.position.set(posX, 1, map.size - 1);
-// });
 
 //<----- HIGHLIGHT HELPER ------>
 var highlight = require('voxel-highlight');
