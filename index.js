@@ -84,7 +84,7 @@ spider.setPosition(4, 10, 2);
 
 
 // <------ PLAYER ------>
-
+var fly = require('voxel-fly')
 //voxel-player: add player that can move around. It needs a copy of the game
 var createPlayer = require('voxel-player')(game);
 var player = createPlayer('textures/player.png'); //creates player and provide dummy texture
@@ -92,13 +92,16 @@ window.player = player;
 // player.pov('third');
 player.possess(); //camera follow player
 player.yaw.position.set(1, 10, 1);
+//creating fly and assigning to current player controller character
+var makeFly = fly(game)
+var target = game.controls.target()
+game.flyer = makeFly(target)
 //Toggle Camera First / Third Person View
 window.addEventListener('keydown', function(ev) {
     if (ev.keyCode === 'R'.charCodeAt(0)) {
         player.toggle();
     }
 });
-
 
 //<----- HIGHLIGHT HELPER ------>
 var highlight = require('voxel-highlight');
