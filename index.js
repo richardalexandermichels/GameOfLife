@@ -69,9 +69,13 @@ window.creature = basicCreature;
 basicCreature.setPosition(2, 10, 2);
 
 var Cow = require('./creature/cow.js');
-var cow = new Cow(game, map);
+var cow = new Cow(game, map, "cow");
 window.cow = cow;
 cow.setPosition(3, 10, 2);
+
+var cow2 = new Cow(game, map, "cow2");
+window.cow2 = cow2;
+cow2.setPosition(6, 3, 2);
 
 var Spider = require('./creature/spider.js');
 var spider = new Spider(game, map);
