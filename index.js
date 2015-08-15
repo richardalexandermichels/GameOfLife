@@ -77,20 +77,20 @@ var creatures = {}; //all creatures
 
 var Basic = require('./creature/basicCreature.js');
 var basicCreature = new Basic(game, map);
-window.creature = basicCreature;
-basicCreature.setPosition(Math.round(Math.random()*size), 10, Math.round(Math.random()*size));
+window.creature = basicCreature; //for debugging
+basicCreature.spawn(map);
 initialize(creatures, 'basicCreature', basicCreature);
 
 var Cow = require('./creature/cow.js');
 var cow = new Cow(game, map);
-window.cow = cow;
-cow.setPosition(Math.round(Math.random()*size), 10, Math.round(Math.random()*size));
+window.cow = cow; //for debugging
+cow.spawn(map);
 initialize(creatures, 'cow', cow);
 
 var Spider = require('./creature/spider.js');
 var spider = new Spider(game, map);
-window.spider = spider;
-spider.setPosition(Math.round(Math.random()*size), 10, Math.round(Math.random()*size));
+window.spider = spider; //for debugging
+spider.spawn(map);
 initialize(creatures, 'spider', spider);
 
 

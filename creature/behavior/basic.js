@@ -3,6 +3,11 @@ var EventEmitter = require('events').EventEmitter;
 util.inherits(Creature, EventEmitter);
 
 function Creature() {}
+
+Creature.prototype.spawn = function(map){
+    this.setPosition(Math.round(Math.random()*map.size), 10, Math.round(Math.random()*map.size));
+}
+
 Creature.prototype.jump = function(x) {
     if (x === undefined) x = 1;
     this.move(0, x, 0);
