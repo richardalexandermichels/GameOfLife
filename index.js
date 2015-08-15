@@ -1,3 +1,4 @@
+// <------ HELPERS -------->
 var _ = require("lodash");
 
 // <------ MATERIALS ------>
@@ -38,6 +39,8 @@ var container = document.body;
 game.appendTo(container);
 
 
+var start = require('voxel-start')(game);
+// start();
 
 //<----------Forest-------------------->
 var Forest = require('./forest')(game, {
@@ -56,12 +59,10 @@ var createSky = require('voxel-sky')({
     // starting time of the day
     time: 2400,
 
-
     // size of the sky
     size: game.worldWidth() * 2,
     // how fast the sky rotates
     // speed: 1
-
 
 });
 var sky = createSky(1200);

@@ -61,8 +61,7 @@ function setTick(game, opt) {
   game.play = function() {
     if (paused)
       console.log("game resumed");
-      processTick();
-      paused = !paused;
-    }
-  };
+    processTick();
+    paused = !paused;
+  }
 }
