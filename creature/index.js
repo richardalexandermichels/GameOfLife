@@ -32,6 +32,8 @@ function Creature(game, type, map, opts) {
 
     this.position = this.item.yaw.position;
     this.rotation = this.item.yaw.rotation;
+
+    this.pregnant = false;
 }
 
 //require the node.js utils packet and add event emitter

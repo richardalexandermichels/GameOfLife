@@ -1,25 +1,29 @@
 module.exports = function(game) {
   return function(opt) {
-    return setOptions(game, opt);
+    return setTick(game, opt);
   };
 };
 
-function setOptions(game, opt) {
+function setTick(game, opt) {
 
   var nextTick;
-  var pauseToggle = false;
-  game.events = [];
+  var paused = false;
+  game.events = []; //store events
   game.speed = 1000; //1ms -> this is the basic unit
   processTick(); //start the tick process
 
   game.addEvent = function(func, unit) {
-    this.events.push({func: func, unit: unit, elapsed: 0 });
+    this.events.push({
+      func: func,
+      unit: unit,
+      elapsed: 0
+    });
   };
 
   function processTick() {
-    game.events.forEach(function(event,index) {
+    game.events.forEach(function(event, index) {
       event.elapsed++;
-      if(event.elapsed > event.unit){
+      if (event.elapsed > event.unit) {
         event.elapsed -= event.unit;
         event.func();
       }
@@ -33,12 +37,12 @@ function setOptions(game, opt) {
 
   game.speedUp = function() {
     this.speed /= 2;
-    console.log("game speed: " + 1/game.speed*1000 + 'X');
+    console.log("game speed: " + 1 / game.speed * 1000 + 'X');
   };
 
   game.slowDown = function() {
     this.speed *= 2;
-    console.log("game speed: " + 1/game.speed*1000 + 'X');
+    console.log("game speed: " + 1 / game.speed * 1000 + 'X');
   };
 
   game.resetSpeed = function() {
@@ -47,18 +51,17 @@ function setOptions(game, opt) {
   };
 
   game.pause = function() {
-    var pausedSpeed;
-    if (!pauseToggle) {
-      nextTick();
+    if (!paused) {
       console.log("game paused");
-    } else {
-      console.log("game resumed");
-      processTick();
+      nextTick(); //the game.setTimeout returns a delete itself function. see voxel-engine/modules/tic/index.js
+      paused = !paused;
     }
-    pauseToggle = !pauseToggle;
   };
 
   game.play = function() {
-    this.pause();
-  };
+    if (paused)
+      console.log("game resumed");
+    processTick();
+    paused = !paused;
+  }
 }
