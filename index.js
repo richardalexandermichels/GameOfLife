@@ -13,7 +13,7 @@ var Map = require('./map');
 // Create Map
 var map = new Map(size);
 window.map = map;
-map.fertilize(5, 5);
+map.fertilize(5, 5); //initial fertilized voxel; grass will grow at after 10 seconds;
 
 // <------ GAME ------>
 //voxel-engine: base module
@@ -31,7 +31,7 @@ var game = createGame({
 });
 
 //Set the game time unit
-var setOptions = require('./game-settings/time.js')(game)();
+var setTime= require('./game-settings/time.js')(game)();
 
 window.game = game; //for debugging
 var container = document.body;
@@ -99,7 +99,6 @@ var fly = require('voxel-fly');
 
 
 //voxel-player: add player that can move around. It needs a copy of the game
-
 var createPlayer = require('voxel-player')(game);
 var player = createPlayer('textures/player.png'); //creates player and provide dummy texture
 window.player = player;
