@@ -61,10 +61,10 @@ var createSky = require('voxel-sky')({
     // size of the sky
     size: game.worldWidth() * 2,
     // how fast the sky rotates
-    // speed: 1
+    speed: 1
 
 });
-var sky = createSky(1200);
+var sky = createSky();
 game.on('tick', sky);
 
 function initialize(creatures, name, newCreature) {
