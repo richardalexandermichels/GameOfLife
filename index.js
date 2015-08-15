@@ -41,8 +41,6 @@ var container = document.body;
 game.appendTo(container);
 
 
-
-
 //<----------Forest-------------------->
 var Forest = require('./forest')(game, {
     bark: 3,
@@ -80,19 +78,19 @@ var creatures = {}; //all creatures
 var Basic = require('./creature/basicCreature.js');
 var basicCreature = new Basic(game, map);
 window.creature = basicCreature;
-basicCreature.setPosition(2, 10, 2);
+basicCreature.setPosition(Math.round(Math.random()*size), 10, Math.round(Math.random()*size));
 initialize(creatures, 'basicCreature', basicCreature);
 
 var Cow = require('./creature/cow.js');
 var cow = new Cow(game, map);
 window.cow = cow;
-cow.setPosition(3, 10, 2);
+cow.setPosition(Math.round(Math.random()*size), 10, Math.round(Math.random()*size));
 initialize(creatures, 'cow', cow);
 
 var Spider = require('./creature/spider.js');
 var spider = new Spider(game, map);
 window.spider = spider;
-spider.setPosition(4, 10, 2);
+spider.setPosition(Math.round(Math.random()*size), 10, Math.round(Math.random()*size));
 initialize(creatures, 'spider', spider);
 
 
