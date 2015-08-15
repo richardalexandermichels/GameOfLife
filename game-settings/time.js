@@ -41,7 +41,7 @@ function setOptions(game, opt) {
     console.log("game speed: " + 1/game.speed*1000 + 'X');
   };
 
-  game.speedReset = function() {
+  game.resetSpeed = function() {
     this.speed = 1000;
     console.log("game speed: 1X")
   };

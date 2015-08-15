@@ -67,28 +67,39 @@ var createSky = require('voxel-sky')({
 var sky = createSky(1200);
 game.on('tick', sky);
 
-
+function initialize(creatures, name, newCreature) {
+    if (creatures.hasOwnProperty(name)) creatures[name].push(newCreature);
+    else creatures[name] = [newCreature];
+}
 
 // <------ CREATURE ------>
+var creatures = {}; //all creatures
+
 var Basic = require('./creature/basicCreature.js');
 var basicCreature = new Basic(game, map);
 window.creature = basicCreature;
 basicCreature.setPosition(2, 10, 2);
+initialize(creatures, 'basicCreature', basicCreature);
 
 var Cow = require('./creature/cow.js');
 var cow = new Cow(game, map);
 window.cow = cow;
 cow.setPosition(3, 10, 2);
+initialize(creatures, 'cow', cow);
 
 var Spider = require('./creature/spider.js');
 var spider = new Spider(game, map);
 window.spider = spider;
 spider.setPosition(4, 10, 2);
+initialize(creatures, 'spider', spider);
 
 
 // <------ PLAYER ------>
 var fly = require('voxel-fly');
-    //voxel-player: add player that can move around. It needs a copy of the game
+
+
+//voxel-player: add player that can move around. It needs a copy of the game
+
 var createPlayer = require('voxel-player')(game);
 var player = createPlayer('textures/player.png'); //creates player and provide dummy texture
 window.player = player;
@@ -99,7 +110,7 @@ player.yaw.position.set(1, 10, 1);
 var makeFly = fly(game);
 var target = game.controls.target();
 game.flyer = makeFly(target);
-    //Toggle Camera First / Third Person View
+//Toggle Camera First / Third Person View
 window.addEventListener('keydown', function(ev) {
     if (ev.keyCode === 'R'.charCodeAt(0)) {
         player.toggle();
@@ -116,5 +127,5 @@ highlighter.on('highlight', function(voxelPosArray) {
 
 
 //<----- GAME EVENT ------>
-var setEvent = require('./game-settings/events.js')(game);
+var setEvent = require('./game-settings/events.js')(game,creatures);
 setEvent();

@@ -1,11 +1,12 @@
-module.exports = function(game) {
+module.exports = function(game, creatures) {
     return function() {
-        return setEvent(game);
+        return setEvent(game, creatures);
     };
 };
 
+
 function moveRandomly(dir) {
-    return Math.round(Math.random() * dir) - dir / 2
+    return Math.round(Math.random() * dir - dir / 2)
 }
 
 function step(animalPos, foodPos) {
@@ -17,7 +18,8 @@ function step(animalPos, foodPos) {
 
 //RULE: Logical Event to be set in HERE using the game.AddEvent
 // => For Animation: Use Game.setInterval <=
-function setEvent(game) {
+function setEvent(game, creatures) {
+    var cow = creatures.cow[0];
 
     //Notified that an Creature is eating grass at position x,z
     game.on('eat', function(x, z) {
@@ -39,21 +41,12 @@ function setEvent(game) {
 
 
 
-    //<--------keep player from falling off!-------->
-    window.addEventListener('keydown', function check() {
-        var posX = player.position.x;
-        var posZ = player.position.z;
-
-        if (posX >= map.size - 1 || posX <= 1) player.position.set(map.size - 1, 1, posZ);
-        if (posZ >= map.size - 1 || posZ <= 1) player.position.set(posX, 1, map.size - 1);
-        setTimeout(check, 1000);
-    });
-
     // <------ TICK ------>
     //Game.add Event takes a function that will be called at every 10 game time unit.
     game.addEvent(function() {
-        map.growGrass(game);
-    }, 10);
+        map.growGrass(game)
+    }, 10)
+
 
     game.addEvent(function() {
         var x = cow.position.x - 0.5;
@@ -92,7 +85,7 @@ function setEvent(game) {
             }
         }
 
-        spider.move(moveRandomly(1), 0, moveRandomly(1), map);
-        creature.move(moveRandomly(1), 0, moveRandomly(1), map);
+        spider.move(moveRandomly(2), Math.abs(moveRandomly(2)), moveRandomly(2), map)
+        creature.move(moveRandomly(2), 0, moveRandomly(2), map)
     }, 1);
 }
