@@ -20,7 +20,10 @@ module.exports = function(opts) {
     else if (typeof fn === 'number') {
       // move to the specific time of day
       sky.time = fn;
-      for (var i = 0; i <= 2400; i += sky._speed) sky.tick.call(sky);
+
+      for (var i = 0; i <= 2400; i += sky._speed) {
+        sky.tick.call(sky);
+      }
     }
     return sky.tick.bind(sky);
   }
@@ -36,6 +39,9 @@ Sky.prototype.tick = function(dt) {
   this.inner.position.copy(vec);
   this.ambient.position.copy(vec);
   this.time += this._speed;
+  // this._speed = game.speed/100;
+  // this.time += this._speed;
+  // if(this.time%100 === 0 ) this.time = game.time*100;
   if (this.time > 2400) this.time = 0;
   return this;
 };
@@ -164,10 +170,10 @@ Sky.prototype.clear = function() {
 Sky.prototype._default = {
   hours: {
        0: {color: {h: 230/360, s: 0.3, l: 0}},
-     300: {color: {h: 26/360, s: 0.3, l: 0.5}},
-     500: {color: {h: 230/360, s: 0.3, l: 0.7}},
-    1400: {color: {h: 26/360, s: 0.3, l: 0.5}},
-    1600: {color: {h: 230/360, s: 0.3, l: 0}}
+     400: {color: {h: 26/360, s: 0.3, l: 0.5}},
+     600: {color: {h: 230/360, s: 0.3, l: 0.7}},
+    1600: {color: {h: 26/360, s: 0.3, l: 0.5}},
+    1800: {color: {h: 230/360, s: 0.3, l: 0}}
   },
   init: function() {
     // add a sun on the bottom
@@ -204,6 +210,7 @@ Sky.prototype.fn = function(time) {
     }
   }
   if (my.until === hour) my.until = false;
+  // if(time%100 ===0) console.log("it is " + time); //for debugging
 
   // change moon phase
   if (time === 1200) {
@@ -233,7 +240,7 @@ Sky.prototype.fn = function(time) {
   }
 
   // turn on sunlight
-  if (time === 400) {
+  if (time === 500) {
     (function(sunlight) {
       var i = tic.interval(function() {
         sunlight.intensity += 0.1;

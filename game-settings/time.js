@@ -10,6 +10,9 @@ function setTick(game, opt) {
   var paused = false;
   game.events = []; //store events
   game.speed = 1000; //1ms -> this is the basic unit
+  game.time = 0;
+  game.day = 1;
+  game.year= 1;
   processTick(); //start the tick process
 
   game.addEvent = function(func, unit) {
@@ -20,7 +23,18 @@ function setTick(game, opt) {
     });
   };
 
+  game.addEvent(function(){
+    if(++game.time ===24) {
+      game.time = 0;
+      if(++game.day % 365 == 0){
+        ++game.year;
+        game.day = 1;
+      }
+    }
+  },15)
+
   function processTick() {
+
     game.events.forEach(function(event, index) {
       event.elapsed++;
       if (event.elapsed > event.unit) {
@@ -63,5 +77,13 @@ function setTick(game, opt) {
       console.log("game resumed");
     processTick();
     paused = !paused;
+  }
+
+  game.getDate =function(){
+    console.log("Day " + game.day + " of Year " + game.year)
+  }
+
+  game.getTime = function(){
+    console.log("Current Time: " + game.time + "h.")
   }
 }

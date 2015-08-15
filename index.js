@@ -52,16 +52,16 @@ var Forest = require('./forest')(game, {
 
 
 // <------ SKY ------>
-var createSky = require('voxel-sky')({
+var createSky = require('./sky')({
     game: game,
 
     // starting time of the day
-    time: 2400,
+    // time: 2400,
 
     // size of the sky
     size: game.worldWidth() * 2,
     // how fast the sky rotates
-    speed: 1
+    speed: 0.1
 
 });
 var sky = createSky();
