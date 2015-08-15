@@ -67,32 +67,27 @@ var createSky = require('./sky')({
 var sky = createSky();
 game.on('tick', sky);
 
-function initialize(creatures, name, newCreature) {
-    if (creatures.hasOwnProperty(name)) creatures[name].push(newCreature);
-    else creatures[name] = [newCreature];
-}
 
 // <------ CREATURE ------>
-var creatures = {}; //all creatures
+map.creatures = []; //all creatures
 
 var Basic = require('./creature/basicCreature.js');
 var basicCreature = new Basic(game, map);
 window.creature = basicCreature; //for debugging
 basicCreature.spawn(map);
-initialize(creatures, 'basicCreature', basicCreature);
+map.creatures.push(basicCreature);
 
 var Cow = require('./creature/cow.js');
 var cow = new Cow(game, map);
 window.cow = cow; //for debugging
 cow.spawn(map);
-initialize(creatures, 'cow', cow);
+map.creatures.push(cow);
 
 var Spider = require('./creature/spider.js');
 var spider = new Spider(game, map);
 window.spider = spider; //for debugging
 spider.spawn(map);
-initialize(creatures, 'spider', spider);
-
+map.creatures.push(spider);
 
 // <------ PLAYER ------>
 var fly = require('voxel-fly');
@@ -126,5 +121,5 @@ highlighter.on('highlight', function(voxelPosArray) {
 
 
 //<----- GAME EVENT ------>
-var setEvent = require('./game-settings/events.js')(game,creatures);
+var setEvent = require('./game-settings/events.js')(game, map.creatures);
 setEvent();
