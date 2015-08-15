@@ -46,12 +46,12 @@ var Forest = require('./forest')(game, {
     bark: 3,
     leaves: 4,
     densityScale: 2,
-    treeType: 'random'
+    treeType: 'subspace'
 });
 
 
 
-//<------ SKY ------>
+// <------ SKY ------>
 var createSky = require('voxel-sky')({
     game: game,
 
@@ -61,10 +61,10 @@ var createSky = require('voxel-sky')({
     // size of the sky
     size: game.worldWidth() * 2,
     // how fast the sky rotates
-    // speed: 1
+    speed: 1
 
 });
-var sky = createSky(1200);
+var sky = createSky();
 game.on('tick', sky);
 
 

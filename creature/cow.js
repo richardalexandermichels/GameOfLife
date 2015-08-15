@@ -15,6 +15,7 @@ function Cow(game, map) {
 Cow.prototype = Object.create(Creature.prototype);
 Cow.prototype.constructor = Cow;
 
+
 Cow.prototype.getFood = function() {
     var x = this.position.x - 0.5;
     var z = this.position.z - 0.5;
