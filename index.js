@@ -31,6 +31,8 @@ var game = createGame({
     // lightsDisabled: true
 });
 
+var start = require('./game-settings/start')(game);
+
 //Set the game time unit
 var setTime= require('./game-settings/time.js')(game)();
 
@@ -38,9 +40,6 @@ window.game = game; //for debugging
 var container = document.body;
 game.appendTo(container);
 
-
-var start = require('voxel-start')(game);
-// start();
 
 //<----------Forest-------------------->
 var Forest = require('./forest')(game, {
@@ -78,20 +77,20 @@ var creatures = {}; //all creatures
 
 var Basic = require('./creature/basicCreature.js');
 var basicCreature = new Basic(game, map);
-window.creature = basicCreature;
-basicCreature.setPosition(2, 10, 2);
+window.creature = basicCreature; //for debugging
+basicCreature.spawn(map);
 initialize(creatures, 'basicCreature', basicCreature);
 
 var Cow = require('./creature/cow.js');
 var cow = new Cow(game, map);
-window.cow = cow;
-cow.setPosition(3, 10, 2);
+window.cow = cow; //for debugging
+cow.spawn(map);
 initialize(creatures, 'cow', cow);
 
 var Spider = require('./creature/spider.js');
 var spider = new Spider(game, map);
-window.spider = spider;
-spider.setPosition(4, 10, 2);
+window.spider = spider; //for debugging
+spider.spawn(map);
 initialize(creatures, 'spider', spider);
 
 
@@ -105,7 +104,7 @@ var player = createPlayer('textures/player.png'); //creates player and provide d
 window.player = player;
 // player.pov('third');
 player.possess(); //camera follow player
-player.yaw.position.set(1, 10, 1);
+player.yaw.position.set(size/2, 10, size/2);
 //creating fly and assigning to current player controller character
 var makeFly = fly(game);
 var target = game.controls.target();
