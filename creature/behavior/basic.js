@@ -31,7 +31,7 @@ Creature.prototype.move = function(x, y, z) {
         self.position.y = result.data.y;
         self.position.z = result.data.z;
         self.rotation.y = Number(result.data.rotY) || self.rotation.y;
-        console.log(self.constructor.name + " " +result.data.rotY);
+        // console.log(self.constructor.name + " " +result.data.rotY); //for debugging
     }
 };
 
