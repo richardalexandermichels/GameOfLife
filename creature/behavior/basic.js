@@ -34,6 +34,10 @@ Creature.prototype.move = function(x, y, z) {
         this.position.z += xyz.z;
 };
 
+Creature.prototype.moveRandomly = function(dir) {
+    return Math.round(Math.random() * dir - dir / 2);
+};
+
 Creature.prototype.eat = function() {
     this.game.emit('eat', this.position.x - 0.5, this.position.z - 0.5);
 };
@@ -100,9 +104,11 @@ function parseXYZ(x, y, z) {
 Creature.prototype.procreate = function() {
     this.game.emit("procreate", 5.5, this.position.z - 0.5, this.constructor.name);
     var newCreature = new this.constructor(this.game,this.map);
-    // console.log(newCreature);
-    // console.log(this);
+    map.creatures.push(newCreature);
     newCreature.setPosition(this.position.x - 0.5, 10, this.position.z - 0.5);
+    game.addEvent(function(){
+        newCreature.live();
+    }, 1);
 };
 
 module.exports = Creature;
