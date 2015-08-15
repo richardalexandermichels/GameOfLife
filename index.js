@@ -28,7 +28,7 @@ var game = createGame({
     controls: {
         discreteFire: true
     },
-    // lightsDisabled: true
+    lightsDisabled: true
 });
 
 var start = require('./game-settings/start')(game);
@@ -39,6 +39,28 @@ var setTime= require('./game-settings/time.js')(game)();
 window.game = game; //for debugging
 var container = document.body;
 game.appendTo(container);
+
+// <------ PLAYER ------>
+var fly = require('voxel-fly');
+
+
+//voxel-player: add player that can move around. It needs a copy of the game
+var createPlayer = require('voxel-player')(game);
+var player = createPlayer('textures/player.png'); //creates player and provide dummy texture
+window.player = player;
+// player.pov('third');
+player.possess(); //camera follow player
+player.yaw.position.set(size/2, 10, size/2);
+//creating fly and assigning to current player controller character
+var makeFly = fly(game);
+var target = game.controls.target();
+game.flyer = makeFly(target);
+//Toggle Camera First / Third Person View
+window.addEventListener('keydown', function(ev) {
+    if (ev.keyCode === 'R'.charCodeAt(0)) {
+        player.toggle();
+    }
+});
 
 
 //<----------Forest-------------------->
@@ -67,6 +89,32 @@ var createSky = require('./sky')({
 var sky = createSky();
 game.on('tick', sky);
 
+// <------ CLOUDS ------>
+var clouds = require('voxel-clouds')({
+  // pass a copy of the game
+  game: game,
+
+  // how high up the clouds should be from the player
+  high: 10,
+
+  // the distance from the player the clouds should repeat
+  distance: 100,
+
+  // how many clouds to generate
+  many: 25,
+
+  // how fast the clouds should move
+  speed: 0.01,
+
+  // material of the clouds
+  material: new game.THREE.MeshBasicMaterial({
+    emissive: 0xffffff,
+    shading: game.THREE.FlatShading,
+    fog: false,
+    transparent: true,
+    opacity: 0.5,
+  }),
+});
 
 // <------ CREATURE ------>
 map.creatures = []; //all creatures
@@ -89,27 +137,11 @@ window.spider = spider; //for debugging
 spider.spawn(map);
 map.creatures.push(spider);
 
-// <------ PLAYER ------>
-var fly = require('voxel-fly');
 
 
-//voxel-player: add player that can move around. It needs a copy of the game
-var createPlayer = require('voxel-player')(game);
-var player = createPlayer('textures/player.png'); //creates player and provide dummy texture
-window.player = player;
-// player.pov('third');
-player.possess(); //camera follow player
-player.yaw.position.set(size/2, 10, size/2);
-//creating fly and assigning to current player controller character
-var makeFly = fly(game);
-var target = game.controls.target();
-game.flyer = makeFly(target);
-//Toggle Camera First / Third Person View
-window.addEventListener('keydown', function(ev) {
-    if (ev.keyCode === 'R'.charCodeAt(0)) {
-        player.toggle();
-    }
-});
+
+// on tick, move the clouds
+game.on('tick', clouds.tick.bind(clouds));
 
 //<----- HIGHLIGHT HELPER ------>
 var highlight = require('voxel-highlight');
