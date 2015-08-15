@@ -30,10 +30,13 @@ var game = createGame({
     // lightsDisabled: true
 });
 
+//Set the game time unit
+var setOptions = require('./game-settings/time.js')(game)();
 
 window.game = game; //for debugging
 var container = document.body;
 game.appendTo(container);
+
 
 
 //<----------Forest-------------------->
@@ -93,6 +96,8 @@ initialize(creatures, 'spider', spider);
 
 // <------ PLAYER ------>
 var fly = require('voxel-fly');
+
+
 //voxel-player: add player that can move around. It needs a copy of the game
 
 var createPlayer = require('voxel-player')(game);
@@ -122,5 +127,5 @@ highlighter.on('highlight', function(voxelPosArray) {
 
 
 //<----- GAME EVENT ------>
-var setEvent = require('./game-event');
-setEvent(game, creatures);
+var setEvent = require('./game-settings/events.js')(game,creatures);
+setEvent();
