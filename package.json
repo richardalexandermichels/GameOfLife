@@ -20,6 +20,7 @@
     "browservefy": "0.0.10",
     "three": "0.56.0",
     "voxel": "^0.5.0",
+    "voxel-clouds": "^0.2.0",
     "voxel-engine": "^0.20.2",
     "voxel-fly": "^0.1.2",
     "voxel-highlight": "0.0.10",
