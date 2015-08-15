@@ -1,3 +1,4 @@
+
 var highlight = require('voxel-highlight')
 var highlighter = highlight(game)
 var positionME;
