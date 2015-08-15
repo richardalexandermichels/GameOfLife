@@ -23,6 +23,7 @@ function setTick(game, opt) {
     });
   };
 
+  //save dates
   game.addEvent(function(){
     if(++game.time ===24) {
       game.time = 0;
