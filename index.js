@@ -30,10 +30,13 @@ var game = createGame({
     // lightsDisabled: true
 });
 
+//Set the game time unit
+var setOptions = require('./game-settings/time.js')(game)();
 
 window.game = game; //for debugging
 var container = document.body;
 game.appendTo(container);
+
 
 
 //<----------Forest-------------------->
@@ -54,10 +57,10 @@ var createSky = require('voxel-sky')({
     time: 2400,
 
 
-  // size of the sky
-  size: game.worldWidth() * 2,
-  // how fast the sky rotates
-  // speed: 1
+    // size of the sky
+    size: game.worldWidth() * 2,
+    // how fast the sky rotates
+    // speed: 1
 
 
 });
@@ -84,8 +87,8 @@ spider.setPosition(4, 10, 2);
 
 
 // <------ PLAYER ------>
-var fly = require('voxel-fly')
-//voxel-player: add player that can move around. It needs a copy of the game
+var fly = require('voxel-fly');
+    //voxel-player: add player that can move around. It needs a copy of the game
 var createPlayer = require('voxel-player')(game);
 var player = createPlayer('textures/player.png'); //creates player and provide dummy texture
 window.player = player;
@@ -93,10 +96,10 @@ window.player = player;
 player.possess(); //camera follow player
 player.yaw.position.set(1, 10, 1);
 //creating fly and assigning to current player controller character
-var makeFly = fly(game)
-var target = game.controls.target()
-game.flyer = makeFly(target)
-//Toggle Camera First / Third Person View
+var makeFly = fly(game);
+var target = game.controls.target();
+game.flyer = makeFly(target);
+    //Toggle Camera First / Third Person View
 window.addEventListener('keydown', function(ev) {
     if (ev.keyCode === 'R'.charCodeAt(0)) {
         player.toggle();
@@ -113,5 +116,5 @@ highlighter.on('highlight', function(voxelPosArray) {
 
 
 //<----- GAME EVENT ------>
-var setEvent = require('./game-event')(game);
+var setEvent = require('./game-settings/events.js')(game);
 setEvent();
