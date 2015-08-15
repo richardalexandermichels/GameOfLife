@@ -53,18 +53,18 @@ Cow.prototype.getFood = function() {
     this.singleFood = closestCell || "none"
 }
 
-Cow.prototype.moveRandomly = function(amt) {
-    this.moving = true;
-    var x = Math.round(Math.random() * amt) - amt / 2;
-    var z = Math.round(Math.random() * amt) - amt / 2;
-    this.move(x, 0, z)
-}
+// Cow.prototype.moveRandomly = function(amt) {
+//     this.moving = true;
+//     var x = Math.round(Math.random() * amt) - amt / 2;
+//     var z = Math.round(Math.random() * amt) - amt / 2;
+//     this.move(x, 0, z)
+// }
 
 Cow.prototype.step = function(dir, str) {
     if (dir < this.singleFood[str]) return 1;
     else if (dir > this.singleFood[str]) return -1;
     else return 0;
-}
+};
 
 Cow.prototype.moveTowardsFood = function() {
     var x = this.position.x - 0.5;
@@ -77,7 +77,7 @@ Cow.prototype.moveTowardsFood = function() {
     } else {
         this.move(this.step(x, "x"), 0, this.step(z, "z"));
     }
-}
+};
 
 Cow.prototype.findFood = function() {
     if (this.singleFood === "none") {
@@ -119,7 +119,45 @@ Cow.prototype.exist = function() {
         else this.moveRandomly(2);
     } else this.alive = false;
 
-}
+};
+
+Cow.prototype.live = function() {
+    var x = this.position.x - 0.5;
+    var z = this.position.z - 0.5;
+
+    if (!this.food) this.food = this.findFood();
+    if (this.food && !this.singleFood) {
+        this.singleFood = this.food.shift();
+        if (!this.food.length) this.food = false;
+    }
+
+    if (this.moving && this.food) {
+        if (x === this.singleFood.x && z === this.singleFood.z) {
+            this.moving = false;
+            this.eating = true;
+        } else this.move(step(x, this.singleFood.x), 0, step(z, this.singleFood.z));
+    }
+
+    if (this.moving && !this.food) {
+        this.move(this.moveRandomly(2), 0, this.moveRandomly(2));
+    }
+
+    if (this.eating) {
+        this.eat();
+        this.singleFood = false;
+        this.eating = false;
+    }
+
+    if (!this.eating && !this.moving) {
+        if (!this.food) {
+            this.move(this.moveRandomly(2), 0, this.moveRandomly(2));
+            this.moving = true;
+        } else {
+            this.move(step(x, this.singleFood.x), 0, step(z, this.singleFood.z));
+            this.moving = true;
+        }
+    }
+};
 
 var util = require('util');
 

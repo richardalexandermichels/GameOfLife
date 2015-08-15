@@ -7,6 +7,10 @@ function Basic(game, map) {
 Basic.prototype = Object.create(Creature.prototype);
 Basic.prototype.constructor = Basic;
 
+Basic.prototype.live = function() {
+	this.move(creature.moveRandomly(2), 0, creature.moveRandomly(2), map);
+};
+
 var util = require('util');
 
 //Loads basic/shared behavior
