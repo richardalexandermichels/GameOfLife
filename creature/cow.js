@@ -63,7 +63,7 @@ Cow.prototype.step = function(dir, str) {
     if (dir < this.singleFood[str]) return 1;
     else if (dir > this.singleFood[str]) return -1;
     else return 0;
-}
+};
 
 Cow.prototype.moveTowardsFood = function() {
     var x = this.position.x - 0.5;
@@ -76,7 +76,7 @@ Cow.prototype.moveTowardsFood = function() {
     } else {
         this.move(this.step(x, "x"), 0, this.step(z, "z"));
     }
-}
+};
 
 Cow.prototype.findFood = function() {
     if (this.singleFood === "none") {
