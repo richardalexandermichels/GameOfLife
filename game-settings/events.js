@@ -39,13 +39,15 @@ function setEvent(game, creatures) {
 
     // <------ TICK ------>
     //Game.add Event takes a function that will be called at every 10 game time unit.
-    game.addEvent(function() {
-        map.growGrass(game);
-    }, 10);
-    
-    map.creatures.forEach(function(creature){
-        game.addEvent(function(){
+    // game.addEvent(function() {
+    //     map.growGrass(game);
+    // }, 20);
+
+    //on each tick, we loop through creatures array and call .live() 
+    //if they are still there. All dead creatures have been spliced out of the array.
+    game.addEvent(function(){
+        map.creatures.forEach(function(creature){
             creature.live();
-        }, 1);
-    });
+        });
+    }, 1)
 }

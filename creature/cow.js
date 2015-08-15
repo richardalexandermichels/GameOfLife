@@ -6,10 +6,8 @@ function Cow(game, map) {
     this.foundFood;
     this.singleFood = "none";
     this.eatingCount = 0;
-    this.hp = 10;
-    this.hpCount = 0;
-    this.hungry;
-    this.alive = true;
+    this.hp = 25;
+    this.hunger = 0;
 }
 
 Cow.prototype = Object.create(Creature.prototype);
@@ -88,14 +86,14 @@ Cow.prototype.findFood = function() {
     if (this.singleFood === "none") {
         this.moveRandomly(2);
     }
+
     if (typeof this.singleFood === "object" && this.moving) {
         this.moveTowardsFood();
     }
     if (this.foundFood) {
-        if (this.eatingCount === 4) {
+        if (this.eatingCount === 2) {
             this.eat();
             this.hp++
-            this.hpCount = 0;
             this.getFood();
             this.eatingCount = 0;
             this.moving = true;
@@ -103,59 +101,29 @@ Cow.prototype.findFood = function() {
     }
 }
 
-Cow.prototype.exist = function() {
-    if (this.alive) {
-        this.hpCount++;
-        if (this.hpCount === 10) {
-            this.hp--;
-            this.hpCount = 0;
-        }
-
-        if (this.hp === 0) this.alive = false;
-        if (this.hp <= 5) this.hungry = true;
-        if (this.hp === 10) this.hungry = false;
-
-        if (this.hungry) this.findFood();
-        else this.moveRandomly(2);
-    } else this.alive = false;
-
-};
-
 Cow.prototype.live = function() {
+    console.log('HP:' + this.hp + "hunger:" + this.hunger);
     var x = this.position.x - 0.5;
     var z = this.position.z - 0.5;
-
-    if (!this.food) this.food = this.findFood();
-    if (this.food && !this.singleFood) {
-        this.singleFood = this.food.shift();
-        if (!this.food.length) this.food = false;
-    }
-
-    if (this.moving && this.food) {
-        if (x === this.singleFood.x && z === this.singleFood.z) {
-            this.moving = false;
-            this.eating = true;
-        } else this.move(step(x, this.singleFood.x), 0, step(z, this.singleFood.z));
-    }
-
-    if (this.moving && !this.food) {
-        this.move(this.moveRandomly(2), 0, this.moveRandomly(2));
-    }
-
-    if (this.eating) {
-        this.eat();
-        this.singleFood = false;
-        this.eating = false;
-    }
-
-    if (!this.eating && !this.moving) {
-        if (!this.food) {
+    if (this.isAlive) {
+        this.hunger++;
+        if (this.hp === 0) this.die()
+        if (this.hunger <= 10) {
             this.move(this.moveRandomly(2), 0, this.moveRandomly(2));
-            this.moving = true;
-        } else {
-            this.move(step(x, this.singleFood.x), 0, step(z, this.singleFood.z));
-            this.moving = true;
         }
+        else {
+            this.getFood();
+            if (x === this.singleFood.x && z === this.singleFood.z) {
+                this.moving = false;
+                this.eating = true;
+                this.eat(10);
+            } 
+            
+            else {
+                this.move(this.step(x, this.singleFood.x), 0, this.step(z, this.singleFood.z));
+            }
+        }
+        if (this.hunger >= 50) this.hp--
     }
 };
 

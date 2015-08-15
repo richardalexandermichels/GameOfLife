@@ -11,9 +11,12 @@ var shape = require('./shape.js');
 
 function Creature(game, type, map, opts) {
     var obj = shape[type](); // Get shape for creature
+    this.tObj = obj
     var T = game.THREE;
     this.game = game;
     this.map = map;
+    this.isAlive = true;
+    this.hp = 10;
 
     //<--- Not currently Used --->
     // if (!opts) opts = {};

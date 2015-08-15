@@ -39,8 +39,12 @@ Creature.prototype.moveRandomly = function(dir) {
     return Math.round(Math.random() * dir - dir / 2);
 };
 
-Creature.prototype.eat = function() {
+Creature.prototype.eat = function(amt) {
     this.game.emit('eat', this.position.x - 0.5, this.position.z - 0.5);
+    this.singleFood = false;
+    this.hunger -= 10;
+    this.eating = false;
+    this.moving = true;
 };
 
 Creature.prototype.lookAt = function(obj) {
@@ -103,6 +107,7 @@ function parseXYZ(x, y, z) {
 }
 
 Creature.prototype.procreate = function() {
+    console.log('ran procreate');
     this.game.emit("procreate", 5.5, this.position.z - 0.5, this.constructor.name);
     var newCreature = new this.constructor(this.game,this.map);
     map.creatures.push(newCreature);
@@ -111,5 +116,17 @@ Creature.prototype.procreate = function() {
         newCreature.live();
     }, 1);
 };
+
+Creature.prototype.die = function(){
+    this.isAlive = false;
+    var ind;
+    var self = this;
+    map.creatures.forEach(function(creature, index){
+        if (self.tObj.id === creature.tObj.id) ind = index;
+    })
+    map.creatures.splice(ind, 1);
+    game.removeItem(this);
+    game.scene.remove(this.tObj)
+}
 
 module.exports = Creature;

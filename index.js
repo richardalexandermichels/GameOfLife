@@ -14,7 +14,21 @@ var Map = require('./map');
 // Create Map
 var map = new Map(size);
 window.map = map;
-map.fertilize(5, 5); //initial fertilized voxel; grass will grow at after 10 seconds;
+// map.fertilize(5, 5); //initial fertilized voxel; grass will grow at after 10 seconds;
+// map.fertilize(15, 15)
+// map.fertilize(5, 15)
+// map.fertilize(15, 5)
+
+
+   // _.times(400, function(){
+   //      map.fertilize(Math.floor(Math.random()*21), Math.floor(Math.random()*21))
+   // })
+for(var i = 0; i < size; i++){
+    for(var j = 0; j < size; j++){
+        map.fertilize(i, j)
+    }
+}
+
 
 // <------ GAME ------>
 //voxel-engine: base module
@@ -38,6 +52,7 @@ var setTime= require('./game-settings/time.js')(game)();
 
 window.game = game; //for debugging
 var container = document.body;
+map.growGrass(game)
 game.appendTo(container);
 
 
