@@ -31,6 +31,8 @@ var game = createGame({
     // lightsDisabled: true
 });
 
+var start = require('./game-settings/start')(game);
+
 //Set the game time unit
 var setTime= require('./game-settings/time.js')(game)();
 
@@ -39,8 +41,7 @@ var container = document.body;
 game.appendTo(container);
 
 
-var start = require('voxel-start')(game);
-// start();
+
 
 //<----------Forest-------------------->
 var Forest = require('./forest')(game, {
@@ -105,7 +106,7 @@ var player = createPlayer('textures/player.png'); //creates player and provide d
 window.player = player;
 // player.pov('third');
 player.possess(); //camera follow player
-player.yaw.position.set(1, 10, 1);
+player.yaw.position.set(size/2, 10, size/2);
 //creating fly and assigning to current player controller character
 var makeFly = fly(game);
 var target = game.controls.target();
