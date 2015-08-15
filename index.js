@@ -46,12 +46,12 @@ var Forest = require('./forest')(game, {
     bark: 3,
     leaves: 4,
     densityScale: 2,
-    treeType: 'random'
+    treeType: 'subspace'
 });
 
 
 
-//<------ SKY ------>
+// <------ SKY ------>
 var createSky = require('voxel-sky')({
     game: game,
 

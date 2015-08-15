@@ -13,25 +13,26 @@ Creature.prototype.jump = function(x) {
     this.move(0, x, 0);
 };
 Creature.prototype.move = function(x, y, z) {
-    if (z < 0) {
-        if (x === 0) this.rotation.y = Math.PI;
-        else this.rotation.y = Math.PI * (3 / 4) * (x / Math.abs(x))
-    }
-    if (z > 0) {
-        if (x === 0) this.rotation.y = 0;
-        else this.rotation.y = Math.PI * (1 / 4) * (x / Math.abs(x))
-    }
-    if (z === 0 && x !== 0) {
-        this.rotation.y = Math.PI * (1 / 2) * (x / Math.abs(x));
+    var data={
+        x:x,
+        y:y,
+        z:z,
+        currentX:this.position.x,
+        currentY:this.position.y,
+        currentZ:this.position.z,
+        size:this.map.size,
     }
 
-    var xyz = parseXYZ(x, y, z);
-    if ((this.position.x + xyz.x <= this.map.size) && (this.position.x + xyz.x >= 0))
-        this.position.x += xyz.x;
-    if ((this.position.y + xyz.y <= this.map.size) && (this.position.y + xyz.y >= 0))
-        this.position.y += xyz.y;
-    if ((this.position.z + xyz.z <= this.map.size) && (this.position.z + xyz.z >= 0))
-        this.position.z += xyz.z;
+    var myWorker = new Worker("./creature/behavior/moveWorker.js");
+    myWorker.postMessage(data);
+    var self = this;
+    myWorker.onmessage=function (result){
+        self.position.x = result.data.x;
+        self.position.y = result.data.y;
+        self.position.z = result.data.z;
+        self.rotation.y = Number(result.data.rotY) || self.rotation.y;
+        console.log(self.constructor.name + " " +result.data.rotY);
+    }
 };
 
 Creature.prototype.eat = function() {
