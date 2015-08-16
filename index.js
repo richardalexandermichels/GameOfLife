@@ -173,9 +173,15 @@ window.penguin = penguin; //for debugging
 penguin.spawn(map);
 map.creatures.push(penguin);
 
+var Deer = require('./creature/deer.js');
+var deer = new Deer(game, map);
+window.Deer = deer; //for debugging
+deer.spawn(map);
+map.creatures.push(deer);
+
 //<---- CONVERT TOOL --->
 var convert = require('voxel-critter').Convert();
-convert.readImage('./penguin.png', function(err, hash) {
+convert.readImage('./deer.png', function(err, hash) {
   var data = convert.toVoxels(hash);
   window.png = data;
   // data now contains the voxels, colors, and bounds
