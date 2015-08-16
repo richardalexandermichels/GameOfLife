@@ -191,10 +191,17 @@ window.wildDog = wildDog; //for debugging
 wildDog.spawn(map);
 map.creatures.push(wildDog);
 
+var Crocodile = require('./creature/crocodile.js');
+var crocodile = new Crocodile(game, map);
+window.crocodile = crocodile; //for debugging
+crocodile.spawn(map);
+map.creatures.push(crocodile);
+
+
 
 //<---- CONVERT TOOL --->
 var convert = require('voxel-critter').Convert();
-convert.readImage('./wildDog.png', function(err, hash) {
+convert.readImage('./crocodile.png', function(err, hash) {
   var data = convert.toVoxels(hash);
   window.png = data;
   // data now contains the voxels, colors, and bounds
