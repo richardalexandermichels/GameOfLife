@@ -161,9 +161,15 @@ window.lion = lion; //for debugging
 lion.spawn(map);
 map.creatures.push(lion);
 
+var Turtle = require('./creature/turtle.js');
+var turtle = new Turtle(game, map);
+window.turtle = turtle; //for debugging
+turtle.spawn(map);
+map.creatures.push(turtle);
+
 //<---- CONVERT TOOL --->
 var convert = require('voxel-critter').Convert();
-convert.readImage('./lion.png', function(err, hash) {
+convert.readImage('./penguin.png', function(err, hash) {
   var data = convert.toVoxels(hash);
   window.png = data;
   // data now contains the voxels, colors, and bounds
