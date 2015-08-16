@@ -155,9 +155,15 @@ window.fox = fox; //for debugging
 fox.spawn(map);
 map.creatures.push(fox);
 
+var Lion = require('./creature/lion.js');
+var lion = new Lion(game, map);
+window.lion = lion; //for debugging
+lion.spawn(map);
+map.creatures.push(lion);
+
 //<---- CONVERT TOOL --->
 var convert = require('voxel-critter').Convert();
-convert.readImage('./fox.png', function(err, hash) {
+convert.readImage('./lion.png', function(err, hash) {
   var data = convert.toVoxels(hash);
   window.png = data;
   // data now contains the voxels, colors, and bounds
