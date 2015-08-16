@@ -185,9 +185,16 @@ window.chick = chick; //for debugging
 chick.spawn(map);
 map.creatures.push(chick);
 
+var WildDog = require('./creature/wildDog.js');
+var wildDog = new WildDog(game, map);
+window.wildDog = wildDog; //for debugging
+wildDog.spawn(map);
+map.creatures.push(wildDog);
+
+
 //<---- CONVERT TOOL --->
 var convert = require('voxel-critter').Convert();
-convert.readImage('./chick.png', function(err, hash) {
+convert.readImage('./wildDog.png', function(err, hash) {
   var data = convert.toVoxels(hash);
   window.png = data;
   // data now contains the voxels, colors, and bounds
