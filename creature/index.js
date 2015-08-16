@@ -59,7 +59,7 @@ function build(obj) {
   });
   console.log(voxels);
   // create mesh
-  var scale = 0.4;
+  var scale = 0.2;
   var mesh = voxelMesh(voxels, this.game.mesher, new this.game.THREE.Vector3(scale, scale, scale), this.game.THREE);
   var mat = new self.game.THREE.MeshBasicMaterial({vertexColors: this.game.THREE.FaceColors});
   mesh.createSurfaceMesh(mat);

@@ -1,7 +1,7 @@
 var Creature = require('./');
 
 function Elephant(game, map) {
-    Creature.call(this, game, "elephant", map);
+    Creature.call(this, game, "big elephant", map);
 }
 
 Elephant.prototype = Object.create(Creature.prototype);

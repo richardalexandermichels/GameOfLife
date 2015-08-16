@@ -137,31 +137,27 @@ window.spider = spider; //for debugging
 spider.spawn(map);
 map.creatures.push(spider);
 
-// var Giraffe = require('./creature/giraffe.js');
-// var giraffe = new Giraffe(game, map);
-// window.giraffe = giraffe; //for debugging
-// giraffe.spawn(map);
-// map.creatures.push(giraffe);
-//
-
-// var convert = require('voxel-critter').Convert();
-// convert.readImage('./elephant.png', function(err, hash) {
-//   var data = convert.toVoxels(hash);
-//   window.elephant = data;
-//   // data now contains the voxels, colors, and bounds
-// });
-
-
-
-
-// var critterCreator = require('voxel-critter')(game);
-// critterCreator('./elephant.png')
-
 var Elephant = require('./creature/elephant.js');
 var elephant = new Elephant(game, map);
 window.elephant = elephant; //for debugging
 elephant.spawn(map);
 map.creatures.push(elephant);
+
+var Giraffe = require('./creature/giraffe.js');
+var giraffe = new Giraffe(game, map);
+window.giraffe = giraffe; //for debugging
+giraffe.spawn(map);
+map.creatures.push(giraffe);
+
+//<---- CONVERT TOOL --->
+var convert = require('voxel-critter').Convert();
+convert.readImage('./giraffe.png', function(err, hash) {
+  var data = convert.toVoxels(hash);
+  window.png = data;
+  // data now contains the voxels, colors, and bounds
+});
+
+
 
 
 // on tick, move the clouds

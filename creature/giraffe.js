@@ -7,9 +7,6 @@ function Giraffe(game, map) {
 Giraffe.prototype = Object.create(Creature.prototype);
 Giraffe.prototype.constructor = Giraffe;
 
-Giraffe.prototype.live = function() {
-  this.move(creature.moveRandomly(2), 2, creature.moveRandomly(2), map);
-};
 
 var util = require('util');
 
