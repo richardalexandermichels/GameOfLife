@@ -149,9 +149,15 @@ window.giraffe = giraffe; //for debugging
 giraffe.spawn(map);
 map.creatures.push(giraffe);
 
+var Fox = require('./creature/fox.js');
+var fox = new Fox(game, map);
+window.fox = fox; //for debugging
+fox.spawn(map);
+map.creatures.push(fox);
+
 //<---- CONVERT TOOL --->
 var convert = require('voxel-critter').Convert();
-convert.readImage('./giraffe.png', function(err, hash) {
+convert.readImage('./fox.png', function(err, hash) {
   var data = convert.toVoxels(hash);
   window.png = data;
   // data now contains the voxels, colors, and bounds

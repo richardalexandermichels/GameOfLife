@@ -16,8 +16,10 @@ var T = game.THREE;
 function Creature(game, type, map, opts) {
     var obj = shape[type]; // Get shape for creature
     if(typeof obj !=="function"){
-        obj = build(obj);
-        obj.scale = new T.Vector3(0.5,0.5,0.5)
+        var displayScale = obj.display || 0.5;
+        obj = build(obj,obj.scale);
+        console.log(displayScale);
+        obj.scale = new T.Vector3(displayScale,displayScale,displayScale)
     } else{
         obj = obj();
         obj.scale = new T.Vector3(0.04, 0.04, 0.04);
@@ -46,7 +48,7 @@ function Creature(game, type, map, opts) {
 }
 
 //Convert voxel-builder critter into our critter already converted hash
-function build(obj) {
+function build(obj,scale) {
   var bounds = obj.bounds;
   var voxels = obj.voxels;
   var colors = obj.colors;
@@ -59,7 +61,7 @@ function build(obj) {
   });
   console.log(voxels);
   // create mesh
-  var scale = 0.2;
+  scale = scale || 0.2;
   var mesh = voxelMesh(voxels, this.game.mesher, new this.game.THREE.Vector3(scale, scale, scale), this.game.THREE);
   var mat = new self.game.THREE.MeshBasicMaterial({vertexColors: this.game.THREE.FaceColors});
   mesh.createSurfaceMesh(mat);
