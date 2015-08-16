@@ -167,6 +167,12 @@ window.turtle = turtle; //for debugging
 turtle.spawn(map);
 map.creatures.push(turtle);
 
+var Penguin = require('./creature/penguin.js');
+var penguin = new Penguin(game, map);
+window.penguin = penguin; //for debugging
+penguin.spawn(map);
+map.creatures.push(penguin);
+
 //<---- CONVERT TOOL --->
 var convert = require('voxel-critter').Convert();
 convert.readImage('./penguin.png', function(err, hash) {
