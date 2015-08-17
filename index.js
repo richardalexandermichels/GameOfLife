@@ -197,11 +197,24 @@ window.crocodile = crocodile; //for debugging
 crocodile.spawn(map);
 map.creatures.push(crocodile);
 
+var Beaver = require('./creature/beaver.js');
+var beaver = new Beaver(game, map);
+window.beaver = beaver; //for debugging
+beaver.spawn(map);
+map.creatures.push(beaver);
+
+var Pigeon = require('./creature/pigeon.js');
+var pigeon = new Pigeon(game, map);
+window.pigeon = pigeon; //for debugging
+pigeon.spawn(map);
+map.creatures.push(pigeon);
+
+
 
 
 //<---- CONVERT TOOL --->
 var convert = require('voxel-critter').Convert();
-convert.readImage('./crocodile.png', function(err, hash) {
+convert.readImage('./pigeon.png', function(err, hash) {
   var data = convert.toVoxels(hash);
   window.png = data;
   // data now contains the voxels, colors, and bounds
