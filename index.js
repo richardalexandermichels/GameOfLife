@@ -209,12 +209,19 @@ window.pigeon = pigeon; //for debugging
 pigeon.spawn(map);
 map.creatures.push(pigeon);
 
+var Duck = require('./creature/duck.js');
+var duck = new Duck(game, map);
+window.duck = duck; //for debugging
+duck.spawn(map);
+map.creatures.push(duck);
+
+
 
 
 
 //<---- CONVERT TOOL --->
 var convert = require('voxel-critter').Convert();
-convert.readImage('./pigeon.png', function(err, hash) {
+convert.readImage('./duck.png', function(err, hash) {
   var data = convert.toVoxels(hash);
   window.png = data;
   // data now contains the voxels, colors, and bounds
