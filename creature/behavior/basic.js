@@ -112,4 +112,8 @@ Creature.prototype.procreate = function() {
     }, 1);
 };
 
+Creature.prototype.live = function() {
+    this.move(creature.moveRandomly(2), 0, creature.moveRandomly(2), map);
+};
+
 module.exports = Creature;
