@@ -3,29 +3,11 @@ var EventEmitter = require('events').EventEmitter;
 var Creature = require('../index.js');
 util.inherits(Creature, EventEmitter);
 
-
-Creature.prototype.getFood = function() {
-    var x = this.position.x - 0.5;
-    var z = this.position.z - 0.5;
-
-    //get surrounding area
-    var around = [];
-    this.map.data.forEach(function(row, rowIndex) {
-        if (rowIndex <= x + this.vision && rowIndex >= x - this.vision) {
-            row.forEach(function(cell, cellIndex) {
-                if (cellIndex <= z + this.vision && cellIndex >= z - this.vision)
-                    around.push({
-                        cell: cell,
-                        x: rowIndex,
-                        z: cellIndex
-                    });
-            })
-        }
-    });
-    //get closest food voxel
+Creature.prototype.getFood = function(foodType) {
     var min, closestCell;
-    around.forEach(function(cell) {
-        if (cell.cell.material === "grass") {
+    var ard = this.lookAround(this.vision);
+    ard.forEach(function(cell) {
+        if (cell.cell.material === foodType) {
             var dist = Math.abs(x + z - (cell.x + cell.z));
             if (!min) {
                 min = dist;
@@ -34,30 +16,9 @@ Creature.prototype.getFood = function() {
                 min = dist;
                 closestCell = cell;
             }
-
         }
     });
-
     this.food = closestCell || "none";
-};
-
-Creature.prototype.step = function(dir, str) {
-    if (dir < this.food[str]) return 1;
-    else if (dir > this.food[str]) return -1;
-    else return 0;
-};
-
-Creature.prototype.moveTowardsFood = function() {
-    var x = this.position.x - 0.5;
-    var z = this.position.z - 0.5;
-
-    //if moving 0 in all directions
-    if (!this.step(x, "x") && !this.step(z, "z")) {
-        this.foundFood = true;
-        this.moving = false;
-    } else {
-        this.move(this.step(x, "x"), 0, this.step(z, "z"));
-    }
 };
 
 Creature.prototype.eat = function() {
@@ -66,7 +27,7 @@ Creature.prototype.eat = function() {
 
 Creature.prototype.findFood = function() {
     if (this.food === "none") {
-        this.getFood();
+        this.getFood("grass");
         this.moving = true;
     }
 
@@ -74,14 +35,13 @@ Creature.prototype.findFood = function() {
         this.moveRandomly(2);
     }
     if (typeof this.food === "object" && this.moving) {
-        this.moveTowardsFood();
+        this.moveTowardsObjective(this.food);
     }
     if (this.foundFood) {
         if (this.eatingCount === 4) {
             this.eat();
-            this.hp++
-            this.hpCount = 0;
-            this.getFood();
+            this.hp++;
+            this.getFood("grass");
             this.eatingCount = 0;
             this.moving = true;
         } else this.eatingCount++;
