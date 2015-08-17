@@ -1,7 +1,7 @@
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 util.inherits(Creature, EventEmitter);
-util.inherits(Creature, require(.'/eating.js'))
+util.inherits(Creature, require('./eating.js'));
 
 function Creature() {}
 
@@ -25,7 +25,7 @@ Creature.prototype.move = function(x, y, z) {
         currentX:this.position.x,
         currentY:this.position.y,
         currentZ:this.position.z,
-        size:this.map.size
+        size: this.map.size
     }
 
     var myWorker = new Worker("./creature/behavior/moveWorker.js");
@@ -137,7 +137,7 @@ Creature.prototype.procreate = function() {
     map.creatures.push(newCreature);
     newCreature.setPosition(this.position.x - 0.5, 10, this.position.z - 0.5);
     game.addEvent(function(){
-        newCreature.live();
+        newCreature.exist();
     }, 1);
 };
 

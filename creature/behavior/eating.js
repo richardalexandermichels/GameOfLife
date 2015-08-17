@@ -1,6 +1,8 @@
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
+var Creature = require('../index.js');
 util.inherits(Creature, EventEmitter);
+
 
 Creature.prototype.getFood = function() {
     var x = this.position.x - 0.5;
@@ -87,4 +89,4 @@ Creature.prototype.findFood = function() {
 };
 
 
-module.exports = Eating;
+module.exports = Creature;

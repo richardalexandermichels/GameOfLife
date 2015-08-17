@@ -1,4 +1,4 @@
-module.exports = Creature;
+module.exports = render;
 var voxel = require('voxel');
 var voxelMesh = require('voxel-engine/node_modules/voxel-mesh');
 
@@ -6,7 +6,7 @@ var voxelMesh = require('voxel-engine/node_modules/voxel-mesh');
 var shape = require('./shape.js');
 var T = game.THREE;
 
-function rendered(model, map) {
+function render(model, map) {
     var obj = shape[model.name]; // Get shape for creature
     if(typeof obj !=="function"){
         var displayScale = obj.display || 0.5;
@@ -18,8 +18,8 @@ function rendered(model, map) {
         obj.scale = new T.Vector3(0.04, 0.04, 0.04);
     }
     console.log("this line is called");
-    this.game = game;
-    this.map = map;
+    model.game = game;
+    model.map = map;
 
     //<--- Not currently Used --->
     // if (!opts) opts = {};
@@ -32,10 +32,10 @@ function rendered(model, map) {
     model.item = game.makePhysical(obj);
     model.item.subjectTo(game.gravity);
     game.scene.add(obj);
-    game.addItem(model.rendered); //this line breaks
+    game.addItem(model.item); //this line breaks
 
     model.position = model.item.yaw.position;
-    model.rotation = this.item.yaw.rotation;
+    model.rotation = model.item.yaw.rotation;
     model.setPosition(Math.round(Math.random()*map.size), 10, Math.round(Math.random()*map.size));
 };
 
@@ -94,4 +94,4 @@ function build(obj,scale) {
 // Adds event emitter functionality to Creature
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
-util.inherits(Creature, EventEmitter);
+util.inherits(render, EventEmitter);

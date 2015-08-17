@@ -11,7 +11,7 @@ function Creature (opts) {
     this.social = opts.social || 10;
     this.memory = [];
     this.food = [];
-    this.rendered;
+    this.offspring;
     this.pregnant = false;
     this.position = {
     	x: 0,
@@ -23,10 +23,9 @@ function Creature (opts) {
     	y: 0,
     	z: 0
     };
-
 };
 
-function getHp = function(size){
+function getHp(size){
 	return size * 10;
 };
 
@@ -35,3 +34,5 @@ var EventEmitter = require('events').EventEmitter;
 
 util.inherits(Creature, EventEmitter);
 util.inherits(Creature, require('./behavior/index.js'));
+
+module.exports = Creature;
