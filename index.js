@@ -118,102 +118,108 @@ var clouds = require('voxel-clouds')({
 
 // <------ CREATURE ------>
 map.creatures = []; //all creatures
+var Rendered = require('./creature/render.js');
+var Creature = require('./creature/index.js');
 
-var Basic = require('./creature/basicCreature.js');
-var basicCreature = new Basic(game, map);
-window.creature = basicCreature; //for debugging
-basicCreature.spawn(map);
-map.creatures.push(basicCreature);
-
-var Cow = require('./creature/cow.js');
-var cow = new Cow(game, map);
+var cow = new Creature({
+  name: 'cow',
+  size: 5,
+  vision: 3
+});
 window.cow = cow; //for debugging
-cow.spawn(map);
+var cowView = new Rendered(cow, map);
 map.creatures.push(cow);
 
-var Spider = require('./creature/spider.js');
-var spider = new Spider(game, map);
-window.spider = spider; //for debugging
-spider.spawn(map);
-map.creatures.push(spider);
+// var Basic = require('./creature/basicCreature.js');
+// var basicCreature = new Basic(game, map);
+// window.creature = basicCreature; //for debugging
+// basicCreature.spawn(map);
+// map.creatures.push(basicCreature);
 
-var Elephant = require('./creature/elephant.js');
-var elephant = new Elephant(game, map);
-window.elephant = elephant; //for debugging
-elephant.spawn(map);
-map.creatures.push(elephant);
 
-var Giraffe = require('./creature/giraffe.js');
-var giraffe = new Giraffe(game, map);
-window.giraffe = giraffe; //for debugging
-giraffe.spawn(map);
-map.creatures.push(giraffe);
+// var Spider = require('./creature/spider.js');
+// var spider = new Spider(game, map);
+// window.spider = spider; //for debugging
+// spider.spawn(map);
+// map.creatures.push(spider);
 
-var Fox = require('./creature/fox.js');
-var fox = new Fox(game, map);
-window.fox = fox; //for debugging
-fox.spawn(map);
-map.creatures.push(fox);
+// var Elephant = require('./creature/elephant.js');
+// var elephant = new Elephant(game, map);
+// window.elephant = elephant; //for debugging
+// elephant.spawn(map);
+// map.creatures.push(elephant);
 
-var Lion = require('./creature/lion.js');
-var lion = new Lion(game, map);
-window.lion = lion; //for debugging
-lion.spawn(map);
-map.creatures.push(lion);
+// var Giraffe = require('./creature/giraffe.js');
+// var giraffe = new Giraffe(game, map);
+// window.giraffe = giraffe; //for debugging
+// giraffe.spawn(map);
+// map.creatures.push(giraffe);
 
-var Turtle = require('./creature/turtle.js');
-var turtle = new Turtle(game, map);
-window.turtle = turtle; //for debugging
-turtle.spawn(map);
-map.creatures.push(turtle);
+// var Fox = require('./creature/fox.js');
+// var fox = new Fox(game, map);
+// window.fox = fox; //for debugging
+// fox.spawn(map);
+// map.creatures.push(fox);
 
-var Penguin = require('./creature/penguin.js');
-var penguin = new Penguin(game, map);
-window.penguin = penguin; //for debugging
-penguin.spawn(map);
-map.creatures.push(penguin);
+// var Lion = require('./creature/lion.js');
+// var lion = new Lion(game, map);
+// window.lion = lion; //for debugging
+// lion.spawn(map);
+// map.creatures.push(lion);
 
-var Deer = require('./creature/deer.js');
-var deer = new Deer(game, map);
-window.Deer = deer; //for debugging
-deer.spawn(map);
-map.creatures.push(deer);
+// var Turtle = require('./creature/turtle.js');
+// var turtle = new Turtle(game, map);
+// window.turtle = turtle; //for debugging
+// turtle.spawn(map);
+// map.creatures.push(turtle);
 
-var Chick = require('./creature/chick.js');
-var chick = new Chick(game, map);
-window.chick = chick; //for debugging
-chick.spawn(map);
-map.creatures.push(chick);
+// var Penguin = require('./creature/penguin.js');
+// var penguin = new Penguin(game, map);
+// window.penguin = penguin; //for debugging
+// penguin.spawn(map);
+// map.creatures.push(penguin);
 
-var WildDog = require('./creature/wildDog.js');
-var wildDog = new WildDog(game, map);
-window.wildDog = wildDog; //for debugging
-wildDog.spawn(map);
-map.creatures.push(wildDog);
+// var Deer = require('./creature/deer.js');
+// var deer = new Deer(game, map);
+// window.Deer = deer; //for debugging
+// deer.spawn(map);
+// map.creatures.push(deer);
 
-var Crocodile = require('./creature/crocodile.js');
-var crocodile = new Crocodile(game, map);
-window.crocodile = crocodile; //for debugging
-crocodile.spawn(map);
-map.creatures.push(crocodile);
+// var Chick = require('./creature/chick.js');
+// var chick = new Chick(game, map);
+// window.chick = chick; //for debugging
+// chick.spawn(map);
+// map.creatures.push(chick);
 
-var Beaver = require('./creature/beaver.js');
-var beaver = new Beaver(game, map);
-window.beaver = beaver; //for debugging
-beaver.spawn(map);
-map.creatures.push(beaver);
+// var WildDog = require('./creature/wildDog.js');
+// var wildDog = new WildDog(game, map);
+// window.wildDog = wildDog; //for debugging
+// wildDog.spawn(map);
+// map.creatures.push(wildDog);
 
-var Pigeon = require('./creature/pigeon.js');
-var pigeon = new Pigeon(game, map);
-window.pigeon = pigeon; //for debugging
-pigeon.spawn(map);
-map.creatures.push(pigeon);
+// var Crocodile = require('./creature/crocodile.js');
+// var crocodile = new Crocodile(game, map);
+// window.crocodile = crocodile; //for debugging
+// crocodile.spawn(map);
+// map.creatures.push(crocodile);
 
-var Duck = require('./creature/duck.js');
-var duck = new Duck(game, map);
-window.duck = duck; //for debugging
-duck.spawn(map);
-map.creatures.push(duck);
+// var Beaver = require('./creature/beaver.js');
+// var beaver = new Beaver(game, map);
+// window.beaver = beaver; //for debugging
+// beaver.spawn(map);
+// map.creatures.push(beaver);
+
+// var Pigeon = require('./creature/pigeon.js');
+// var pigeon = new Pigeon(game, map);
+// window.pigeon = pigeon; //for debugging
+// pigeon.spawn(map);
+// map.creatures.push(pigeon);
+
+// var Duck = require('./creature/duck.js');
+// var duck = new Duck(game, map);
+// window.duck = duck; //for debugging
+// duck.spawn(map);
+// map.creatures.push(duck);
 
 
 

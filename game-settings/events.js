@@ -45,7 +45,7 @@ function setEvent(game, creatures) {
     
     map.creatures.forEach(function(creature){
         game.addEvent(function(){
-            creature.live();
+            creature.exist();
         }, 1);
     });
 }
