@@ -44,8 +44,7 @@ function Creature(game, type, map, opts) {
     this.position = this.item.yaw.position;
     this.rotation = this.item.yaw.rotation;
 
-    this.pregnant = false;
-}
+};
 
 //Convert voxel-builder critter into our critter already converted hash
 function build(obj,scale) {
@@ -98,11 +97,11 @@ function build(obj,scale) {
 };
 
 
-//require the node.js utils packet and add event emitter
-//Adds event emitter functionality to Creature
+// require the node.js utils packet and add event emitter
+// Adds event emitter functionality to Creature
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 util.inherits(Creature, EventEmitter);
 
 //Loads basic behavior
-util.inherits(Creature, require('./behavior/basic.js'));
+util.inherits(Creature, require('./newIndex.js'));
