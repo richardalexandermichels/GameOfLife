@@ -1,17 +1,22 @@
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 util.inherits(Creature, EventEmitter);
+util.inherits(Creature, require('./eating.js'));
 
 function Creature() {}
 
-Creature.prototype.spawn = function(map){
-    this.setPosition(Math.round(Math.random()*map.size), 10, Math.round(Math.random()*map.size));
-}
-
-Creature.prototype.jump = function(x) {
-    if (x === undefined) x = 1;
-    this.move(0, x, 0);
+Creature.prototype.die = function(){
+    this.isAlive = false;
+    var ind;
+    var self = this;
+    map.creatures.forEach(function(creature, index){
+        if (self.tObj.id === creature.tObj.id) ind = index;
+    });
+    map.creatures.splice(ind, 1);
+    game.removeItem(this);
+    game.scene.remove(this.tObj);
 };
+
 Creature.prototype.move = function(x, y, z) {
     var data={
         x:x,
@@ -20,7 +25,7 @@ Creature.prototype.move = function(x, y, z) {
         currentX:this.position.x,
         currentY:this.position.y,
         currentZ:this.position.z,
-        size:this.map.size,
+        size: this.map.size
     }
 
     var myWorker = new Worker("./creature/behavior/moveWorker.js");
@@ -35,13 +40,37 @@ Creature.prototype.move = function(x, y, z) {
     }
 };
 
-Creature.prototype.moveRandomly = function(dir) {
-    return Math.round(Math.random() * dir - dir / 2);
+Creature.prototype.moveRandomly = function(amt) {
+    this.moving = true;
+    var x = Math.round(Math.random() * amt) - amt / 2;
+    var z = Math.round(Math.random() * amt) - amt / 2;
+    this.move(x, 0, z);
 };
 
-Creature.prototype.eat = function() {
-    this.game.emit('eat', this.position.x - 0.5, this.position.z - 0.5);
+
+Creature.prototype.jump = function(x) {
+    if (x === undefined) x = 1;
+    this.move(0, x, 0);
 };
+
+Creature.prototype.exist = function() {
+    if (this.alive) {
+        this.hpCount++;
+        if (this.hpCount === 10) {
+            this.hp--;
+            this.hpCount = 0;
+        }
+
+        if (this.hp === 0) this.alive = false;
+        if (this.hp <= 5) this.hungry = true;
+        if (this.hp === 10) this.hungry = false;
+
+        if (this.hungry) this.findFood();
+        else this.moveRandomly(2);
+    } else this.alive = false;
+
+};
+
 
 Creature.prototype.lookAt = function(obj) {
     var a = obj.position || obj;
@@ -108,12 +137,8 @@ Creature.prototype.procreate = function() {
     map.creatures.push(newCreature);
     newCreature.setPosition(this.position.x - 0.5, 10, this.position.z - 0.5);
     game.addEvent(function(){
-        newCreature.live();
+        newCreature.exist();
     }, 1);
-};
-
-Creature.prototype.live = function() {
-    this.move(creature.moveRandomly(2), 0, creature.moveRandomly(2), map);
 };
 
 module.exports = Creature;
