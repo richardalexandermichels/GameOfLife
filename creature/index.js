@@ -2,7 +2,7 @@ function Creature (opts) {
     this.name = opts.name;
     this.alive = true;
     this.size = opts.size;
-    this.isHerbivore = opts.isHerbivore || true;
+    this.isHerbivore = opts.isHerbivore;
     this.hpMax = getHp(opts.size); 
     this.hp = this.hpMax
     this.hunger = Math.floor(this.hp / 4);
@@ -24,11 +24,11 @@ function Creature (opts) {
     	y: 0,
     	z: 0
     };
-};
+}
 
 function getHp(size){
 	return size * 10;
-};
+}
 
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;

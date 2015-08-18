@@ -27,10 +27,10 @@ function setTick(game, opt) {
 game.removeEvent = function(id){
   game.events.forEach(function(eventObj, index){
     if(eventObj.id === id){
-      game.events.splice(index,1)
+      game.events.splice(index,1);
     }
-  })
-}
+  });
+};
 
   //save dates
   game.addEvent(function(){
@@ -41,7 +41,7 @@ game.removeEvent = function(id){
         game.day = 1;
       }
     }
-  },15)
+  },15);
 
 
   function processTick() {
@@ -72,7 +72,7 @@ game.removeEvent = function(id){
 
   game.resetSpeed = function() {
     this.speed = 1000;
-    console.log("game speed: 1X")
+    console.log("game speed: 1X");
   };
 
   game.pause = function() {

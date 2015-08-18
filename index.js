@@ -129,8 +129,9 @@ var Creature = require('./creature/index.js');
 
 var cow = new Creature({
   name: 'cow',
-  size: 8,
-  vision: 3
+  size: 9001,
+  vision: 3,
+  isHerbivore: true
 });
 window.cow = cow; //for debugging
 map.creatures.push(cow);
@@ -219,7 +220,7 @@ map.creatures.push(cow);
 var wildDog = new Creature({
   name: 'wildDog',
   size: 4,
-  vision: 5,
+  vision: 20,
   isHerbivore: false
 });
 window.wildDog = wildDog; //for debugging
@@ -260,6 +261,9 @@ map.creatures.push(wildDog);
 map.creatures.forEach(function(creature){
     render(creature, map);
 });
+cow.setPosition(5,1,7);
+map.getCell(5,7).hasAnimal = cow;
+wildDog.setPosition(6,1,6);
 
 //<---- CONVERT TOOL --->
 var convert = require('voxel-critter').Convert();
