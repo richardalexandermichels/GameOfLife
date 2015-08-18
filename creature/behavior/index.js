@@ -47,7 +47,8 @@ Creature.prototype.die = function(){
     });
     game.removeItem(this);
     game.scene.remove(this.item.avatar);
-};
+    game.removeEvent(this.item.avatar.id)
+    };
 
 Creature.prototype.procreate = function() {
     this.game.emit("procreate", 5.5, this.position.z - 0.5, this.name);
@@ -134,25 +135,39 @@ Creature.prototype.jump = function(x) {
 //     }, opts.interval);
 // };
 
-Creature.prototype.lookAround = function(search) {
+Creature.prototype.lookAround = function(searchRadius, objective) {
     var x = this.position.x - 0.5;
     var z = this.position.z - 0.5;
+    var xPlus = x + searchRadius ;
+    var xMinus = x - searchRadius; 
+    var zPlus = z + searchRadius ;
+    var zMinus = z - searchRadius; 
+
+    var around = [];
+    for(var i = xMinus; i <= xPlus; i++){
+        for(var j = zMinus; j<= zPlus; j++){
+            var cell = map.getCell(i,j);
+            if(cell){
+                around.push(cell);
+            }
+        }
+    }
+    return around;
 
     //get surrounding area
-    var around = [];
-    this.map.data.forEach(function(row, rowIndex) {
-        if (rowIndex <= x + search && rowIndex >= x - search) {
-            row.forEach(function(cell, cellIndex) {
-                if (cellIndex <= z + search && cellIndex >= z - search) {
-                    around.push({
-                        cell: cell,
-                        x: rowIndex,
-                        z: cellIndex
-                    });
-                }
-            });
-        }
-    });
+    // this.map.data.forEach(function(row, rowIndex) {
+    //     if (rowIndex <= x + searchRadius && rowIndex >= x - searchRadius) {
+    //         row.forEach(function(cell, cellIndex) {
+    //             if (cellIndex <= z + searchRadius && cellIndex >= z - searchRadius) {
+    //                 around.push({
+    //                     cell: cell,
+    //                     x: rowIndex,
+    //                     z: cellIndex
+    //                 });
+    //             }
+    //         });
+    //     }
+    // });
 
 };
 
@@ -177,32 +192,41 @@ Creature.prototype.moveTowardsObjective = function(cell) {
 
 Creature.prototype.herd = function() {
     var neighbors = this.lookAround(this.social);
+    var foundNeighbor = false
         neighbors.forEach(function(cell) {
-        if (cell.cell.hasAnimal.name=== this.name) {
-            var dist = Math.abs(x + z - (cell.x + cell.z));
-            if (!min) {
-                min = dist;
-                closestCell = cell;
-            } else if (dist < min) {
-                min = dist;
-                closestCell = cell;
+            if(cell.hasAnimal){
+                if (cell.hasAnimal.name === this.name) {
+                    foundNeighbor = true
+                    var dist = Math.sqrt(Math.pow((cell.x - x),2) + Math.pow((cell.z- z),2)) ;
+                    if(!min){
+                        min = dist
+                    }else if(dist < min){
+                        min = dist
+                        closestCell = cell
+                    }
+                }
             }
-        }
     });
-    this.moveTowardsObjective(closestCell);
+    if(foundNeighbor){
+        this.moveTowardsObjective(closestCell);
+    }else{
+      this.moveRandomly(2);  
+    } 
 };
 
 Creature.prototype.exist = function() {
     if (this.alive) {
-        console.log("hunger ", this.hunger, "hp ", this.hp)
+        console.log("hunger ", this.hunger, "hp ", this.hp, "NAME", this.name)
         this.hunger++;
         if (this.hunger >= Math.floor(this.hp)) this.hp--;
 
         if (this.hp === 0) this.die();
 
-        if (this.hunger >= Math.floor(this.hp / 4)) this.findFood();
-        if (this.herbivore) this.herd();
-        else this.moveRandomly(2);
+        if (this.hunger >= Math.floor(this.hp / 2)) this.findFood();
+        else if (this.isHerbivore){
+            this.herd() 
+        }
+        else this.moveRandomly(2)
     }
 };
 

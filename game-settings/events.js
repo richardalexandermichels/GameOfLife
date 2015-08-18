@@ -46,6 +46,6 @@ function setEvent(game, creatures) {
     map.creatures.forEach(function(creature){
         game.addEvent(function(){
             creature.exist();
-        }, 1);
+        }, creature.speed, creature.item.avatar.id);
     });
 }

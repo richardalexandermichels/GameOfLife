@@ -2,15 +2,16 @@ function Creature (opts) {
     this.name = opts.name;
     this.alive = true;
     this.size = opts.size;
-    this.isCarnivore = opts.isCarnivore || false;
     this.isHerbivore = opts.isHerbivore || true;
-    this.hp = getHp(opts.size);
+    this.hpMax = getHp(opts.size); 
+    this.hp = this.hpMax
     this.hunger = Math.floor(this.hp / 4);
     this.vision = opts.vision;
     this.intelligence = opts.intelligence || 10;
+    this.speed = Math.floor(this.size / 4)
     this.social = opts.social || 10;
     this.memory = [];
-    this.food = [];
+    this.food = "none";
     this.offspring;
     this.pregnant = false;
     this.position = {
