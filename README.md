@@ -17,6 +17,24 @@ At 1X speed, a second IRL equals to 4 minutes IG.
 | 1 year| 1h12m| 36m    |    18m |
 
 
-##Creature
-The creature constructor takes an object of options. The name property must correspond to a shape in the shape.js file.
-The default entries are size and vision. Other creature properties are: isAlive, Carnivore, Herbivore, intelligence, social, memory, food, hunger, pregnant, position and rotation. In order to be visible on the map, any new instance of a creature must have the "render" function called on it (that function takes the instance and the map).
+
+##Basic File Structiure
+##Creature (in folder 'creature')
+index.js - the constructor for all creatures
+render.js - three.js rendering for creatures
+shape.js - a collection of objects for each creature's shape
+BEHAVIOR (folder)
+index.js - shared creature behaviors
+Eating.js - eating behaviors (separate behaviors for herbivores and carnivores)
+moveWorker.js - a web worker to handle movement calculations (saves us a few frames)
+The creature constructor takes an object of options. 
+
+##Forest
+function and models for building a forest of trees (modded from npm module 'voxel-forest')
+##Tree
+functions and models for building trees (mostly modded code from npm module 'voxel-tree')
+
+##root folder
+index.js - building the game, rendering and placing initial generation of creatures
+map.js - constructs an array of cell objects that correspond to the play field
+moving-map.js ??? legacy code?
