@@ -4,8 +4,8 @@ var Creature = require('../index.js');
 util.inherits(Creature, EventEmitter);
 
 Creature.prototype.getFood = function() {
-    var x = this.position.x;
-    var z = this.position.z;
+    var x = this.position.x - 0.5;
+    var z = this.position.z - 0.5;
     var min;
     var closestCell;
     var objective;
@@ -17,6 +17,7 @@ Creature.prototype.getFood = function() {
     var ard = this.lookAround(this.vision, objective);
     var foodSource;
 
+    //determine closest cell
     ard.forEach(function(cell) {
         var dist = Math.sqrt(Math.pow((cell.x - x), 2) + Math.pow((cell.z- z), 2)) ;
         if(!min){
@@ -27,28 +28,20 @@ Creature.prototype.getFood = function() {
             closestCell = cell;
         }
     });
+
     this.food = closestCell || "none";
     this.moveTowardsObjective(this.food);
 };
 
 Creature.prototype.eat = function() {
     console.log(this.name + " ate " + this.food.material, this.food.hasAnimal);
-    this.game.emit('eat', this.position.x, this.position.z, this);
+    this.game.emit('eat', this.position.x - 0.5, this.position.z - 0.5, this);
     if(this.hunger > 0){
-        this.hunger -= 10;  
+        this.hunger -= 10; 
     }
-    this.foundFood = undefined;
     this.food = 'none';
 };
 
-Creature.prototype.findFood = function() {
-    console.log("find food was called", this.foundFood);
-    if (this.foundFood === undefined) this.getFood();
-    if (this.foundFood) this.eat();
-    else {
-        this.moveRandomly(2);
-    }
-};
 
 
 module.exports = Creature;

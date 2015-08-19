@@ -105,6 +105,7 @@ function Cell(x, z, material) {
     this.x = x;
     this.y = 0;
     this.z = z;
+    this.hasAnimal = null;
 }
 
 Cell.prototype.setMaterial = function(material) {
