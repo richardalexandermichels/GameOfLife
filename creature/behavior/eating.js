@@ -32,16 +32,18 @@ Creature.prototype.getFood = function() {
 };
 
 Creature.prototype.eat = function() {
+    console.log(this.name + " ate " + this.food.material, this.food.hasAnimal);
     this.game.emit('eat', this.position.x, this.position.z, this);
     if(this.hunger > 0){
         this.hunger -= 10;  
     }
-    this.foundFood = false;
+    this.foundFood = undefined;
     this.food = 'none';
 };
 
 Creature.prototype.findFood = function() {
-    if (this.foundFood === false) this.getFood();
+    console.log("find food was called", this.foundFood);
+    if (this.foundFood === undefined) this.getFood();
     if (this.foundFood) this.eat();
     else {
         this.moveRandomly(2);

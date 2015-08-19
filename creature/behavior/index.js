@@ -38,7 +38,6 @@ Creature.prototype.die = function(){
     this.isAlive = false;
     var ind;
     var self = this;
-    console.log(map.creatures);
     map.creatures.forEach(function(creature, index){
         if (self.item.avatar.id === creature.item.avatar.id) {
             ind = index;
@@ -245,7 +244,7 @@ Creature.prototype.herd = function() {
 
 Creature.prototype.exist = function() {
     if (this.alive) {
-        console.log("hunger ", this.hunger, "hp ", this.hp, "NAME", this.name);
+        console.log("NAME: " + this.name + ", Hunger: " + this.hunger + ", HP: " + this.hp);
         this.hunger++;
         if (this.hunger >= Math.floor(this.hp)) this.hp--;
 
