@@ -18,9 +18,15 @@ function setEvent(game, creatures) {
     // var cow = creatures.cow[0];
 
     //Notified that an Creature is eating grass at position x,z
-    game.on('eat', function(x, z) {
+    game.on('eat', function(x, z, creature) {
         // console.log(x, z);
-        map.empty(x, z);
+        if(creature.isHerbivore){
+            map.empty(creature.food.x, creature.food.z);
+        }
+        else{
+            console.log('die event', creature.food)
+            creature.food.hasAnimal.die();
+        }
     });
 
     //Creature is procreating
@@ -46,6 +52,6 @@ function setEvent(game, creatures) {
     map.creatures.forEach(function(creature){
         game.addEvent(function(){
             creature.exist();
-        }, 1);
+        }, creature.speed, creature.item.avatar.id);
     });
 }

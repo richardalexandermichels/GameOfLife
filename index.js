@@ -14,7 +14,12 @@ var Map = require('./map');
 // Create Map
 var map = new Map(size);
 window.map = map;
-map.fertilize(5, 5); //initial fertilized voxel; grass will grow at after 10 seconds;
+for(var i = 0; i < map.data.length; i++){
+  for(var j = 0; j < map.data.length; j++){
+    map.fertilize(i,j)
+  }
+}
+// map.fertilize(5, 5); //initial fertilized voxel; grass will grow at after 10 seconds;
 
 // <------ GAME ------>
 //voxel-engine: base module
@@ -39,6 +44,7 @@ var setTime= require('./game-settings/time.js')(game)();
 window.game = game; //for debugging
 var container = document.body;
 game.appendTo(container);
+map.growGrass(game)
 
 // <------ PLAYER ------>
 var fly = require('voxel-fly');
@@ -123,8 +129,9 @@ var Creature = require('./creature/index.js');
 
 var cow = new Creature({
   name: 'cow',
-  size: 5,
-  vision: 3
+  size: 8,
+  vision: 3,
+  isHerbivore: true
 });
 window.cow = cow; //for debugging
 map.creatures.push(cow);
@@ -132,7 +139,8 @@ map.creatures.push(cow);
 var basic = new Creature({
   name: 'basic',
   size: 2,
-  vision: 3
+  vision: 3,
+  isHerbivore: false
 });
 window.basic = basic; //for debugging
 map.creatures.push(basic);
@@ -141,7 +149,8 @@ map.creatures.push(basic);
 var spider = new Creature({
   name: 'spider',
   size: 3,
-  vision: 5
+  vision: 5,
+  isHerbivore: false
 });
 window.spider = spider; //for debugging
 map.creatures.push(spider);
@@ -149,15 +158,17 @@ map.creatures.push(spider);
 var elephant = new Creature({
   name: 'elephant',
   size: 10,
-  vision: 3
+  vision: 3,
+  isHerbivore: true
 });
 window.elephant = elephant; //for debugging
 map.creatures.push(elephant);
 
 var giraffe = new Creature({
   name: 'giraffe',
-  size: 7,
-  vision: 5
+  size: 8,
+  vision: 5,
+  isHerbivore: true
 });
 window.giraffe = giraffe; //for debugging
 map.creatures.push(giraffe);
@@ -165,15 +176,17 @@ map.creatures.push(giraffe);
 var fox = new Creature({
   name: 'fox',
   size: 3,
-  vision: 5
+  vision: 5,
+  isHerbivore: false
 });
 window.fox = fox; //for debugging
 map.creatures.push(fox);
 
 var lion = new Creature({
   name: 'lion',
-  size: 6,
-  vision: 6
+  size: 10,
+  vision: 6,
+  isHerbivore: false
 });
 window.lion = lion; //for debugging
 map.creatures.push(lion);
@@ -181,7 +194,8 @@ map.creatures.push(lion);
 var turtle = new Creature({
   name: 'turtle',
   size: 1,
-  vision: 2
+  vision: 2,
+  isHerbivore: true
 });
 window.turtle = turtle; //for debugging
 map.creatures.push(turtle);
@@ -189,7 +203,8 @@ map.creatures.push(turtle);
 var penguin = new Creature({
   name: 'penguin',
   size: 2,
-  vision: 3
+  vision: 3,
+  isHerbivore: true
 });
 window.penguin = penguin; //for debugging
 map.creatures.push(penguin);
@@ -197,7 +212,8 @@ map.creatures.push(penguin);
 var deer = new Creature({
   name: 'deer',
   size: 5,
-  vision: 3
+  vision: 3,
+  isHerbivore: true
 });
 window.deer = deer; //for debugging
 map.creatures.push(deer);
@@ -205,15 +221,17 @@ map.creatures.push(deer);
 var chick = new Creature({
   name: 'chick',
   size: 1,
-  vision: 1
+  vision: 1,
+  isHerbivore: true
 });
 window.chick = chick; //for debugging
 map.creatures.push(chick);
 
 var wildDog = new Creature({
   name: 'wildDog',
-  size: 3,
-  vision: 5
+  size: 4,
+  vision: 20,
+  isHerbivore: false
 });
 window.wildDog = wildDog; //for debugging
 map.creatures.push(wildDog);
@@ -221,7 +239,8 @@ map.creatures.push(wildDog);
 var crocodile = new Creature({
   name: 'crocodile',
   size: 4,
-  vision: 3
+  vision: 3,
+  isHerbivore: false
 });
 window.crocodile = crocodile; //for debugging
 map.creatures.push(crocodile);
@@ -229,7 +248,8 @@ map.creatures.push(crocodile);
 var beaver = new Creature({
   name: 'beaver',
   size: 2,
-  vision: 2
+  vision: 2,
+  isHerbivore: true
 });
 window.beaver = beaver; //for debugging
 map.creatures.push(beaver);
@@ -237,7 +257,8 @@ map.creatures.push(beaver);
 var pigeon = new Creature({
   name: 'pigeon',
   size: 1,
-  vision: 3
+  vision: 3,
+  isHerbivore: true
 });
 window.pigeon = pigeon; //for debugging
 map.creatures.push(pigeon);
@@ -245,7 +266,8 @@ map.creatures.push(pigeon);
 var duck = new Creature({
   name: 'duck',
   size: 2,
-  vision: 3
+  vision: 3,
+  isHerbivore: true
 });
 window.duck = duck; //for debugging
 map.creatures.push(duck);

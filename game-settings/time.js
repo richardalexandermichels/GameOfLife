@@ -15,13 +15,22 @@ function setTick(game, opt) {
   game.year= 1;
   processTick(); //start the tick process
 
-  game.addEvent = function(func, unit) {
+  game.addEvent = function(func, unit, id) {
     this.events.push({
       func: func,
       unit: unit,
-      elapsed: 0
+      elapsed: 0,
+      id: id
     });
   };
+
+game.removeEvent = function(id){
+  game.events.forEach(function(eventObj, index){
+    if(eventObj.id === id){
+      game.events.splice(index,1);
+    }
+  });
+};
 
   //save dates
   game.addEvent(function(){
@@ -32,7 +41,8 @@ function setTick(game, opt) {
         game.day = 1;
       }
     }
-  },15)
+  },15);
+
 
   function processTick() {
 
@@ -62,7 +72,7 @@ function setTick(game, opt) {
 
   game.resetSpeed = function() {
     this.speed = 1000;
-    console.log("game speed: 1X")
+    console.log("game speed: 1X");
   };
 
   game.pause = function() {
