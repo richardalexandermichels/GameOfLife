@@ -140,9 +140,9 @@ Creature.prototype.lookAround = function(searchRadius, objective) {
     var x = this.position.x - 0.5;
     var z = this.position.z - 0.5;
     var xPlus = x + searchRadius ;
-    var xMinus = x - searchRadius; 
+    var xMinus = x - searchRadius;
     var zPlus = z + searchRadius ;
-    var zMinus = z - searchRadius; 
+    var zMinus = z - searchRadius;
     var self = this;
     var around = [];
 
@@ -257,9 +257,7 @@ Creature.prototype.exist = function() {
         if (this.hp === 0) this.die();
 
         if (this.hunger >= Math.floor(this.hp / 2)) this.findFood();
-        else if (this.isHerbivore){
-            this.herd();
-        }
+        this.herd();
     }
 };
 

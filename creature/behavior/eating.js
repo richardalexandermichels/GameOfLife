@@ -16,21 +16,21 @@ Creature.prototype.getFood = function() {
     }
     var ard = this.lookAround(this.vision, objective);
     var foodSource;
-    if(this.name === "wildDog"){
-        console.log('WHAT DID I FIND?',ard);
-    }
 
     ard.forEach(function(cell) {
-        var dist = Math.sqrt(Math.pow((cell.x - x),2) + Math.pow((cell.z- z),2)) ;
+        var dist = Math.sqrt(Math.pow((cell.x - x), 2) + Math.pow((cell.z- z), 2)) ;
         if(!min){
             min = dist;
+            closestCell = cell;
         }else if(dist < min){
             min = dist;
             closestCell = cell;
         }
     });
     this.food = closestCell || "none";
-    console.log("CLosest FOOD", this.food)
+    if(this.name === "wildDog"){
+        console.log('found food', this.food);
+    }
 };
 
 Creature.prototype.eat = function() {
@@ -39,6 +39,8 @@ Creature.prototype.eat = function() {
         this.hunger -= 10;    
     }
     this.moving = true;
+    this.foundFood = false;
+    this.food = 'none'; 
 };
 
 Creature.prototype.findFood = function() {
@@ -54,10 +56,10 @@ Creature.prototype.findFood = function() {
             console.log('FOUND FOOD', this.name,this.food);
         }
         this.eat();
-        this.food = "none";
+        this.moveRandomly(2);
     }
-    else{
-        this.moveRandomly(2)
+    else {
+        this.moveRandomly(2);
     }
 };
 

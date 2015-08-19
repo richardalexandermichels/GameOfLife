@@ -129,7 +129,7 @@ var Creature = require('./creature/index.js');
 
 var cow = new Creature({
   name: 'cow',
-  size: 9001,
+  size: 12,
   vision: 3,
   isHerbivore: true
 });
@@ -161,13 +161,14 @@ map.creatures.push(cow);
 // window.elephant = elephant; //for debugging
 // map.creatures.push(elephant);
 
-// var giraffe = new Creature({
-//   name: 'giraffe',
-//   size: 7,
-//   vision: 5
-// });
-// window.giraffe = giraffe; //for debugging
-// map.creatures.push(giraffe);
+var giraffe = new Creature({
+  name: 'giraffe',
+  size: 8,
+  vision: 5,
+  isHerbivore: true
+});
+window.giraffe = giraffe; //for debugging
+map.creatures.push(giraffe);
 
 // var fox = new Creature({
 //   name: 'fox',
@@ -177,13 +178,14 @@ map.creatures.push(cow);
 // window.fox = fox; //for debugging
 // map.creatures.push(fox);
 
-// var lion = new Creature({
-//   name: 'lion',
-//   size: 6,
-//   vision: 6
-// });
-// window.lion = lion; //for debugging
-// map.creatures.push(lion);
+var lion = new Creature({
+  name: 'lion',
+  size: 10,
+  vision: 6,
+  isHerbivore: false
+});
+window.lion = lion; //for debugging
+map.creatures.push(lion);
 
 // var turtle = new Creature({
 //   name: 'turtle',
