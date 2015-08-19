@@ -4,8 +4,8 @@ var Creature = require('../index.js');
 util.inherits(Creature, EventEmitter);
 
 Creature.prototype.getFood = function() {
-    var x = this.position.x - 0.5;
-    var z = this.position.z - 0.5;
+    var x = this.position.x;
+    var z = this.position.z;
     var min;
     var closestCell;
     var objective;
@@ -28,36 +28,21 @@ Creature.prototype.getFood = function() {
         }
     });
     this.food = closestCell || "none";
-    if(this.name === "wildDog"){
-        console.log('found food', this.food);
-    }
+    this.moveTowardsObjective(this.food);
 };
 
 Creature.prototype.eat = function() {
-    this.game.emit('eat', this.position.x - 0.5, this.position.z - 0.5, this);
+    this.game.emit('eat', this.position.x, this.position.z, this);
     if(this.hunger > 0){
-        this.hunger -= 10;    
+        this.hunger -= 10;  
     }
-    this.moving = true;
     this.foundFood = false;
-    this.food = 'none'; 
+    this.food = 'none';
 };
 
 Creature.prototype.findFood = function() {
-    if (this.food === "none") {
-        this.getFood();
-        this.moving = true;
-    }
-    if (typeof this.food === 'object' && this.moving) {
-        this.moveTowardsObjective(this.food);
-    }
-    if (this.foundFood && !this.moving) {
-        if(this.name === "wildDog"){
-            console.log('FOUND FOOD', this.name,this.food);
-        }
-        this.eat();
-        this.moveRandomly(2);
-    }
+    if (this.foundFood === false) this.getFood();
+    if (this.foundFood) this.eat();
     else {
         this.moveRandomly(2);
     }
