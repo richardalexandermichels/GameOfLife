@@ -9,37 +9,42 @@ Creature.prototype.getFood = function() {
     var min;
     var closestCell;
     var objective;
-    if(this.isHerbivore){
-        objective = 'material';
-    }else{
-        objective = 'hasAnimal';
-    }
-    var ard = this.lookAround(this.vision, objective);
+   
     var foodSource;
 
     //determine closest cell
-    ard.forEach(function(cell) {
-        var dist = Math.sqrt(Math.pow((cell.x - x), 2) + Math.pow((cell.z- z), 2)) ;
-        if(!min){
-            min = dist;
-            closestCell = cell;
-        }else if(dist < min){
-            min = dist;
-            closestCell = cell;
-        }
-    });
+    if(this.isHerbivore === false){
+        var self = this;
+        map.creatures.forEach(function(creature){
+             if(creature !== self){
+                var dist = Math.sqrt(Math.pow((creature.position.x - x), 2) + Math.pow((creature.position.z - z), 2)) ;
+                if(!min){
+                    min = dist;
+                    closestCell = creature;
+                }else if(dist < min){
+                    min = dist;
+                    closestCell = creature;
+                }
+            }
 
-    this.food = closestCell || "none";
-    this.moveTowardsObjective(this.food);
+            // self.move(self.step(x, closestCell.x), 0, self.step(y, closestCell.y));
+        });
+        this.moveTowardsObjective(closestCell); 
+    }
+
+    if(this.isHerbivore){
+        this.moveTowardsObjective("grass");
+    }
 };
 
-Creature.prototype.eat = function() {
-    console.log(this.name + " ate " + this.food.material, this.food.hasAnimal);
-    this.game.emit('eat', this.position.x - 0.5, this.position.z - 0.5, this);
+Creature.prototype.eat = function(target) {
+    // console.log(this.name + " ate " + this.food.material, this.food.hasAnimal);
+    // this.game.emit('eat', this.position.x - 0.5, this.position.z - 0.5, target);
     if(this.hunger > 0){
         this.hunger -= 10; 
     }
-    this.food = 'none';
+    if(this.isHerbivore) map.empty(target.x, target.z);
+    else target.die()
 };
 
 

@@ -1,11 +1,12 @@
 function Creature (opts) {
+    this.size = opts.size;
+    this.appetite = divide(this.size / 4) || 1;
     this.hpMax = multiply(opts.size, 5); 
     this.hp = this.hpMax
     this.age = 0;
     this.name = opts.name;
     this.alive = true;
     this.lifeCycle = this.hp * 4;
-    this.size = opts.size;
     this.isHerbivore = opts.isHerbivore;
     this.hunger = divide(this.hp, 4);
     this.vision = opts.vision;

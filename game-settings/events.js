@@ -18,16 +18,16 @@ function setEvent(game, creatures) {
     // var cow = creatures.cow[0];
 
     //Notified that an Creature is eating grass at position x,z
-    game.on('eat', function(x, z, creature) {
-        // console.log(x, z);
-        if(creature.isHerbivore){
-            map.empty(creature.food.x, creature.food.z);
-        }
-        else{
-            console.log('die event', creature.food)
-            creature.food.hasAnimal.die();
-        }
-    });
+    // game.on('eat', function(x, z, creature) {
+    //     // console.log(x, z);
+    //     // if(creature.isHerbivore){
+    //     //     map.empty(creature.food.x, creature.food.z);
+    //     // }
+    //     // else{
+    //         console.log('die event', creature.name)
+    //         creature.die();
+    //     // }
+    // });
 
     //Creature is procreating
     game.on('procreate', function(x, z, type) {

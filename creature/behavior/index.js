@@ -11,6 +11,8 @@ Creature.prototype.setPosition = function(x, y, z) {
     this.position.y = y;
     this.position.x = x + 0.5;
     this.position.z = z + 0.5;
+    var cellToAddAnimalTo = map.getCell(this.position.x - 0.5, this.position.z - 0.5);
+    cellToAddAnimalTo.hasAnimal = this;
 };
 
 function parseXYZ(x, y, z) {
@@ -38,12 +40,14 @@ Creature.prototype.die = function(){
     this.isAlive = false;
     var ind;
     var self = this;
+    console.log("BEFORE DEATH",map.creatures)
     map.creatures.forEach(function(creature, index){
         if (self.item.avatar.id === creature.item.avatar.id) {
             ind = index;
             map.creatures.splice(ind, 1);
         }
     });
+    console.log("AFTER DEATH",map.creatures)
     game.removeItem(this);
     game.scene.remove(this.item.avatar);
     game.removeEvent(this.item.avatar.id)
@@ -190,7 +194,7 @@ Creature.prototype.step = function(dir, objective) {
     else return 0;
 };
 
-Creature.prototype.moveTowardsObjective = function(cell) {
+Creature.prototype.moveTowardsObjective = function(objv) {
     var x = this.position.x - 0.5;
     var z = this.position.z - 0.5;
     var self = this;
@@ -208,20 +212,34 @@ Creature.prototype.moveTowardsObjective = function(cell) {
     ];
 
     var foundFood = false;
-
-    ard.forEach(function(coords){
-        if(map.getCell(coords[0],coords[1]) === cell){
-            foundFood = true;     
+    if(this.isHerbivore === false){
+        ard.forEach(function(coords){
+            if(coords[0] === objv.position.x - 0.5 && coords[1] === objv.position.z - 0.5 && !foundFood){
+                console.log('killer: ',self.name,"target: ", objv.name);
+                foundFood = true;
+                self.lookAt(objv);
+                self.eat(objv);
+            }
+        });
+        if(foundFood === false){
+            this.move(this.step(x, objv.position.x - 0.5), 0, this.step(z, objv.position.z - 0.5));
         }
-    });
 
-    if (foundFood === false) {
-        this.move(this.step(x, cell.x), 0, this.step(z, cell.z));
     }
-    else {
-        self.lookAt(cell);
-        self.eat();
+    if(this.isHerbivore){
+        var count = 0;
+         ard.forEach(function(coords){
+            if(map.getCell(coords[0], coords[1]).material === objv){
+                if(count <= self.appetite){
+                    count++;
+                    foundFood = true;
+                    self.lookAt(map.getCell(coords[0], coords[1]));
+                    self.eat(map.getCell(coords[0], coords[1]));
+                }
+            }
+        });
     }
+
 };
 
 Creature.prototype.herd = function() {
@@ -256,7 +274,7 @@ Creature.prototype.herd = function() {
 
 Creature.prototype.exist = function() {
     if (this.alive) {
-        console.log("NAME: " + this.name + ", Hunger: " + this.hunger + ", HP: " + this.hp);
+        // console.log("NAME: " + this.name + ", Hunger: " + this.hunger + ", HP: " + this.hp);
         this.hunger++;
         this.age++;
         this.lifeCycle--;
@@ -275,7 +293,7 @@ Creature.prototype.exist = function() {
                 this.lifeCycle === this.hpMax * 4;
             }
         }
-        else {
+        if(this.hunger < Math.floor(this.hp / 2)){
             console.log(this.name + " is herding");
             this.herd();
         }
