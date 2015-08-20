@@ -136,24 +136,23 @@ var cow = new Creature({
 window.cow = cow; //for debugging
 map.creatures.push(cow);
 
-var basic = new Creature({
-  name: 'basic',
-  size: 2,
-  vision: 3,
-  isHerbivore: false
-});
-window.basic = basic; //for debugging
-map.creatures.push(basic);
+// var basic = new Creature({
+//   name: 'basic',
+//   size: 4,
+//   vision: 3,
+//   isHerbivore: false
+// });
+// window.basic = basic; //for debugging
+// map.creatures.push(basic);
 
-
-var spider = new Creature({
-  name: 'spider',
-  size: 3,
-  vision: 5,
-  isHerbivore: false
-});
-window.spider = spider; //for debugging
-map.creatures.push(spider);
+// var spider = new Creature({
+//   name: 'spider',
+//   size: 3,
+//   vision: 5,
+//   isHerbivore: false
+// });
+// window.spider = spider; //for debugging
+// map.creatures.push(spider);
 
 var elephant = new Creature({
   name: 'elephant',
@@ -173,108 +172,111 @@ var giraffe = new Creature({
 window.giraffe = giraffe; //for debugging
 map.creatures.push(giraffe);
 
-var fox = new Creature({
-  name: 'fox',
-  size: 3,
-  vision: 5,
-  isHerbivore: false
-});
-window.fox = fox; //for debugging
-map.creatures.push(fox);
+// var fox = new Creature({
+//   name: 'fox',
+//   size: 3,
+//   vision: 5,
+//   isHerbivore: false
+// });
+// window.fox = fox; //for debugging
+// map.creatures.push(fox);
 
-var lion = new Creature({
-  name: 'lion',
-  size: 10,
-  vision: 6,
-  isHerbivore: false
-});
-window.lion = lion; //for debugging
-map.creatures.push(lion);
+// var lion = new Creature({
+//   name: 'lion',
+//   size: 10,
+//   vision: 6,
+//   isHerbivore: false
+// });
+// window.lion = lion; //for debugging
+// map.creatures.push(lion);
 
-var turtle = new Creature({
-  name: 'turtle',
-  size: 1,
-  vision: 2,
-  isHerbivore: true
-});
-window.turtle = turtle; //for debugging
-map.creatures.push(turtle);
+// var turtle = new Creature({
+//   name: 'turtle',
+//   size: 1,
+//   vision: 2,
+//   isHerbivore: true
+// });
+// window.turtle = turtle; //for debugging
+// map.creatures.push(turtle);
 
-var penguin = new Creature({
-  name: 'penguin',
-  size: 2,
-  vision: 3,
-  isHerbivore: true
-});
-window.penguin = penguin; //for debugging
-map.creatures.push(penguin);
+// var penguin = new Creature({
+//   name: 'penguin',
+//   size: 2,
+//   vision: 3,
+//   isHerbivore: true
+// });
+// window.penguin = penguin; //for debugging
+// map.creatures.push(penguin);
 
-var deer = new Creature({
-  name: 'deer',
-  size: 5,
-  vision: 3,
-  isHerbivore: true
-});
-window.deer = deer; //for debugging
-map.creatures.push(deer);
+// var deer = new Creature({
+//   name: 'deer',
+//   size: 5,
+//   vision: 3,
+//   isHerbivore: true
+// });
+// window.deer = deer; //for debugging
+// map.creatures.push(deer);
 
-var chick = new Creature({
-  name: 'chick',
-  size: 1,
-  vision: 1,
-  isHerbivore: true
-});
-window.chick = chick; //for debugging
-map.creatures.push(chick);
+// var chick = new Creature({
+//   name: 'chick',
+//   size: 1,
+//   vision: 1,
+//   isHerbivore: true
+// });
+// window.chick = chick; //for debugging
+// map.creatures.push(chick);
 
-var wildDog = new Creature({
-  name: 'wildDog',
-  size: 4,
-  vision: 20,
-  isHerbivore: false
-});
-window.wildDog = wildDog; //for debugging
-map.creatures.push(wildDog);
+// var wildDog = new Creature({
+//   name: 'wildDog',
+//   size: 4,
+//   vision: 20,
+//   isHerbivore: false
+// });
+// window.wildDog = wildDog; //for debugging
+// map.creatures.push(wildDog);
 
-var crocodile = new Creature({
-  name: 'crocodile',
-  size: 4,
-  vision: 3,
-  isHerbivore: false
-});
-window.crocodile = crocodile; //for debugging
-map.creatures.push(crocodile);
+// var crocodile = new Creature({
+//   name: 'crocodile',
+//   size: 4,
+//   vision: 3,
+//   isHerbivore: false
+// });
+// window.crocodile = crocodile; //for debugging
+// map.creatures.push(crocodile);
 
-var beaver = new Creature({
-  name: 'beaver',
-  size: 2,
-  vision: 2,
-  isHerbivore: true
-});
-window.beaver = beaver; //for debugging
-map.creatures.push(beaver);
+// var beaver = new Creature({
+//   name: 'beaver',
+//   size: 2,
+//   vision: 2,
+//   isHerbivore: true
+// });
+// window.beaver = beaver; //for debugging
+// map.creatures.push(beaver);
 
-var pigeon = new Creature({
-  name: 'pigeon',
-  size: 1,
-  vision: 3,
-  isHerbivore: true
-});
-window.pigeon = pigeon; //for debugging
-map.creatures.push(pigeon);
+// var pigeon = new Creature({
+//   name: 'pigeon',
+//   size: 1,
+//   vision: 3,
+//   isHerbivore: true
+// });
+// window.pigeon = pigeon; //for debugging
+// map.creatures.push(pigeon);
 
-var duck = new Creature({
-  name: 'duck',
-  size: 2,
-  vision: 3,
-  isHerbivore: true
-});
-window.duck = duck; //for debugging
-map.creatures.push(duck);
+// var duck = new Creature({
+//   name: 'duck',
+//   size: 2,
+//   vision: 3,
+//   isHerbivore: true
+// });
+// window.duck = duck; //for debugging
+// map.creatures.push(duck);
 
 map.creatures.forEach(function(creature){
     render(creature, map);
 });
+
+cow.setPosition(6,1,6);
+basic.setPosition(7,1,7);
 
 //<---- CONVERT TOOL --->
 var convert = require('voxel-critter').Convert();
