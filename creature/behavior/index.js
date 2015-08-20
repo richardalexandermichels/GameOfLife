@@ -1,6 +1,6 @@
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
-var render = require('../render.js')
+var render = require('../render.js');
 util.inherits(Creature, EventEmitter);
 util.inherits(Creature, require('./eating.js'));
 
@@ -66,6 +66,8 @@ Creature.prototype.procreate = function() {
 };
 
 Creature.prototype.move = function(x, y, z) {
+    var cell = map.getCell(this.position.x - 0.5, this.position.z - 0.5)
+    cell.hasAnimal = null;
     var data={
         x:x,
         y:y,
@@ -76,18 +78,19 @@ Creature.prototype.move = function(x, y, z) {
         size: this.map.size
     };
 
+    var self = this;
     var myWorker = new Worker("./creature/behavior/moveWorker.js");
     myWorker.postMessage(data);
-    var self = this;
-    map.getCell(self.position.x - 0.5, self.position.z - 0.5).hasAnimal = null;
-    myWorker.onmessage=function (result){
+    myWorker.onmessage = function (result){
         self.position.x = result.data.x;
         self.position.y = result.data.y;
         self.position.z = result.data.z;
         self.rotation.y = Number(result.data.rotY) || self.rotation.y;
-        map.getCell(self.position.x - 0.5, self.position.z - 0.5).hasAnimal = self;
+        var cell = map.getCell(self.position.x - 0.5, self.position.z - 0.5);
+        cell.hasAnimal = self;
     };
 };
+
 
 Creature.prototype.moveRandomly = function(amt) {
     var x = Math.round((Math.random() * amt) - amt/2);
@@ -146,28 +149,27 @@ Creature.prototype.lookAround = function(searchRadius, objective) {
     for(var i = xMinus; i <= xPlus; i++){
         for(var j = zMinus; j<= zPlus; j++){
             var cell = map.getCell(i,j);
-            if(cell){
+            if(cell && cell.hasAnimal !== self){
                 around.push(cell);
             }
         }
     }
 
-    //for herbivores
+    // for herbivores
     if(objective === 'material'){
         return around.filter(function(cell){
             return cell.material === 'grass';
         });
     }
 
-    //for carnivores
+    //for carnivores:
+    //causing lots of problems...still returns cells where hasAnimal === null
     else{
         return around.filter(function(cell){
-                if(cell.x !== self.position.x - 0.5 && cell.z !== self.position.z - 0.5 ){
-                    return cell.hasAnimal !== null && cell.hasAnimal.name !== self.name;
-                }
+            return cell.hasAnimal !== null && cell.hasAnimal !== self;
         });
     }
-    //get surrounding area
+    // get surrounding area
     // this.map.data.forEach(function(row, rowIndex) {
     //     if (rowIndex <= x + searchRadius && rowIndex >= x - searchRadius) {
     //         row.forEach(function(cell, cellIndex) {
@@ -211,7 +213,7 @@ Creature.prototype.moveTowardsObjective = function(cell) {
 
     ard.forEach(function(coords){
         if(map.getCell(coords[0],coords[1]) === cell){
-            foundFood = true;     
+            foundFood = true;   
         }
     });
 
@@ -272,7 +274,7 @@ Creature.prototype.exist = function() {
             console.log(this.name + ' is procreating');
             if (Math.random() < 0.2) {
                 this.procreate();
-                this.lifeCycle === this.hpMax * 4;
+                this.lifeCycle = this.hpMax * 4;
             }
         }
         else {

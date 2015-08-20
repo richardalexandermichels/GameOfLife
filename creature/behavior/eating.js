@@ -15,8 +15,10 @@ Creature.prototype.getFood = function() {
         objective = 'hasAnimal';
     }
     var ard = this.lookAround(this.vision, objective);
-    var foodSource;
 
+    console.log(this.name + ' found a food', ard);
+    
+    var foodSource;
     //determine closest cell
     ard.forEach(function(cell) {
         var dist = Math.sqrt(Math.pow((cell.x - x), 2) + Math.pow((cell.z- z), 2)) ;
@@ -37,7 +39,7 @@ Creature.prototype.eat = function() {
     console.log(this.name + " ate " + this.food.material, this.food.hasAnimal);
     this.game.emit('eat', this.position.x - 0.5, this.position.z - 0.5, this);
     if(this.hunger > 0){
-        this.hunger -= 10; 
+        this.hunger -= 10;
     }
     this.food = 'none';
 };

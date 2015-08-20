@@ -1,6 +1,6 @@
 function Creature (opts) {
     this.hpMax = multiply(opts.size, 5); 
-    this.hp = this.hpMax
+    this.hp = this.hpMax;
     this.age = 0;
     this.name = opts.name;
     this.alive = true;
@@ -9,7 +9,7 @@ function Creature (opts) {
     this.isHerbivore = opts.isHerbivore;
     this.hunger = divide(this.hp, 4);
     this.vision = opts.vision;
-    this.speed = divide(this.size, 4)
+    this.speed = divide(this.size, 4);
     this.social = opts.social || 10;
     this.memory = [];
     this.food = "none";
